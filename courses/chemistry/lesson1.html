@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שיעור 1 | מבואות הכימיה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles/main.css" />
+</head>
+<body class="site-body">
+  <div class="page-shell">
+    <header class="lesson-hero">
+      <a class="back-link" href="../../index.html">← חזרה לדף הבית</a>
+
+      <div class="lesson-hero__content">
+        <span class="lesson-hero__tag">מבואות הכימיה</span>
+        <h1>שיעור 1 — שפת הכימיה</h1>
+        <p>
+          לומדים להכיר את היסודות דרך הטבלה המחזורית, להבין מהו מספר אטומי,
+          ואז לקרוא נוסחאות כימיות כמו שפה: יסוד, תרכובת, מולקולה, ציון תחתי ומקדם.
+        </p>
+      </div>
+
+      <div class="lesson-hero__visual">
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
+        <div class="orb orb--3"></div>
+        <div class="formula-card">
+          <span class="formula-card__label">דוגמא חיה</span>
+          <div id="heroFormula" class="formula-big"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="lesson-layout">
+        <aside class="lesson-sidebar">
+        <div class="lesson-progress-card">
+            <div class="lesson-progress-card__top">
+            <h3>איפה אני בשיעור?</h3>
+            <span id="lessonProgressPercent" class="lesson-progress-card__percent">0%</span>
+            </div>
+
+            <div class="lesson-progress-bar">
+            <div id="lessonProgressBarFill" class="lesson-progress-bar__fill"></div>
+            </div>
+
+            <nav class="lesson-progress-nav" aria-label="ניווט בשיעור">
+            <a href="#section-periodic" class="lesson-progress-link is-active">הטבלה המחזורית</a>
+            <a href="#section-language" class="lesson-progress-link">הכימיה היא שפה</a>
+            <a href="#section-basics" class="lesson-progress-link">יסוד, תרכובת ומולקולה</a>
+            <a href="#section-subscript" class="lesson-progress-link">ציון תחתי ומקדם</a>
+            <a href="#section-visual" class="lesson-progress-link">מולקולות בעיניים</a>
+            <a href="#section-memory" class="lesson-progress-link">יסודות מולקולריים</a>
+            <a href="#section-metals" class="lesson-progress-link">מתכות ואל־מתכות</a>
+            <a href="#section-quiz" class="lesson-progress-link">קווייז</a>
+            </nav>
+        </div>
+
+        <div class="side-card side-card--accent">
+            <h3>עיקרון מפתח</h3>
+            <p>
+            המספר האטומי מזהה את היסוד.  
+            ציון תחתי אומר <strong>כמה אטומים מאותו סוג יש בתוך מולקולה אחת</strong>,
+            ומקדם אומר <strong>כמה מולקולות יש</strong>.
+            </p>
+        </div>
+        </aside>
+
+      <section class="lesson-main">
+        <!-- 1. הטבלה המחזורית והמספר האטומי -->
+        <section id="section-periodic" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">הבסיס</span>
+            <h2>הטבלה המחזורית והמספר האטומי</h2>
+          </div>
+
+          <p class="lead">
+            הטבלה המחזורית היא כמו המילון של הכימיה. כל משבצת בטבלה מייצגת יסוד אחד,
+            וכל יסוד מזוהה לפי <strong>המספר האטומי</strong> שלו — מספר הפרוטונים בגרעין.
+          </p>
+
+          <div class="interactive-panel">
+            <div class="interactive-panel__text">
+              <h3>לחץ על יסוד</h3>
+              <p>כדי לראות את הסימול, השם והמספר האטומי שלו.</p>
+            </div>
+
+            <div id="periodicIntroGrid" class="classification-area"></div>
+
+            <div id="periodicIntroOutput" class="memory-output">
+              לחץ על אחד היסודות כדי לראות עליו הסבר קצר.
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. הכימיה היא שפה -->
+        <section id="section-language" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">פתיחה</span>
+            <h2>הכימיה היא שפה</h2>
+          </div>
+
+          <p class="lead">
+            כמו שאותיות יוצרות מילים, כך סימולים של יסודות יוצרים נוסחאות.
+            בעזרת מספר קטן יחסית של יסודות אפשר לייצר מגוון עצום של חומרים.
+          </p>
+
+          <div class="example-row">
+            <div class="mini-example">
+              <span class="mini-example__label">מים</span>
+              <div class="formula-slot" data-formula="H2O"></div>
+            </div>
+            <div class="mini-example">
+              <span class="mini-example__label">אמוניה</span>
+              <div class="formula-slot" data-formula="NH3"></div>
+            </div>
+            <div class="mini-example">
+              <span class="mini-example__label">פחמן דו־חמצני</span>
+              <div class="formula-slot" data-formula="CO2"></div>
+            </div>
+          </div>
+        </section>
+
+                <!-- 3. ציון תחתי מול מקדם -->
+        <section id="section-basics" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">החלק הקריטי</span>
+            <h2>ציון תחתי מול מקדם</h2>
+          </div>
+
+          <div class="compare-grid">
+            <article class="compare-box">
+              <span class="compare-box__tag">ציון תחתי</span>
+              <div class="formula-slot formula-slot--large" data-formula="H2O"></div>
+              <p>מופיע אחרי הסימול הכימי, ומכפיל רק את האטום שלפניו.</p>
+              <button class="btn btn--small btn--ghost js-explain-subscript" data-formula="H2O">
+                הסבר אינטראקטיבי
+              </button>
+            </article>
+
+            <article class="compare-box">
+              <span class="compare-box__tag compare-box__tag--yellow">מקדם</span>
+              <div class="formula-slot formula-slot--large" data-formula="2H2O"></div>
+              <p>מופיע לפני הנוסחה, ומכפיל את כל המולקולה.</p>
+              <button class="btn btn--small btn--ghost js-explain-coefficient" data-formula="2H2O">
+                הדגמה אינטראקטיבית
+              </button>
+            </article>
+          </div>
+
+          <div id="formulaExplanation" class="explanation-box" aria-live="polite">
+            בחר הסבר כדי לראות פירוק חזותי של הנוסחה.
+          </div>
+        </section>
+
+        <!-- 4. יסוד, תרכובת ומולקולה -->
+        <section id="section-subscript" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מושגי יסוד</span>
+            <h2>יסוד, תרכובת ומולקולה</h2>
+          </div>
+
+          <div class="concept-grid">
+            <article class="concept-box">
+              <h3>יסוד</h3>
+              <p>חומר שמורכב מאטומים מאותו סוג.</p>
+              <div class="formula-slot formula-slot--small" data-formula="H2"></div>
+            </article>
+
+            <article class="concept-box">
+              <h3>תרכובת</h3>
+              <p>חומר שמורכב מאטומים מסוגים שונים.</p>
+              <div class="formula-slot formula-slot--small" data-formula="CO2"></div>
+            </article>
+
+            <article class="concept-box">
+              <h3>מולקולה</h3>
+              <p>שניים או יותר אטומים הקשורים יחד. היא יכולה להיות יסוד או תרכובת.</p>
+              <div class="formula-slot formula-slot--small" data-formula="O3"></div>
+            </article>
+          </div>
+
+          <div class="interactive-panel">
+            <div class="interactive-panel__text">
+              <h3>תרגול מהיר: מי אני?</h3>
+              <p>לחץ על כל כרטיס כדי לגלות אם הוא יסוד, תרכובת או רק אטומים בודדים.</p>
+            </div>
+            <div id="classificationArea" class="classification-area"></div>
+          </div>
+        </section>
+
+        <!-- 5. ויזואליזציה -->
+        <section id="section-visual" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">ויזואליזציה</span>
+            <h2>מולקולות בעיניים</h2>
+          </div>
+
+          <div class="viewer-controls">
+            <label for="formulaSelect">בחר נוסחה להצגה:</label>
+            <select id="formulaSelect" class="select">
+              <option value="H2">H₂</option>
+              <option value="O2">O₂</option>
+              <option value="N2">N₂</option>
+              <option value="O3">O₃</option>
+              <option value="P4">P₄</option>
+              <option value="S8">S₈</option>
+              <option value="CO2">CO₂</option>
+              <option value="NH3">NH₃</option>
+            </select>
+          </div>
+
+          <div class="molecule-stage">
+            <div id="moleculeViewer"></div>
+            <div id="moleculeLegend" class="molecule-legend"></div>
+          </div>
+        </section>
+
+        <!-- 6. יסודות מולקולריים -->
+        <section id="section-memory" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">לזכור טוב</span>
+            <h2>יסודות מולקולריים שכדאי לזכור</h2>
+          </div>
+
+          <div class="memory-grid">
+            <button class="memory-pill" data-memory="H2">H₂</button>
+            <button class="memory-pill" data-memory="O2">O₂</button>
+            <button class="memory-pill" data-memory="N2">N₂</button>
+            <button class="memory-pill" data-memory="F2">F₂</button>
+            <button class="memory-pill" data-memory="Cl2">Cl₂</button>
+            <button class="memory-pill" data-memory="Br2">Br₂</button>
+            <button class="memory-pill" data-memory="I2">I₂</button>
+            <button class="memory-pill" data-memory="O3">O₃</button>
+            <button class="memory-pill" data-memory="S8">S₈</button>
+            <button class="memory-pill" data-memory="P4">P₄</button>
+          </div>
+
+          <div id="memoryOutput" class="memory-output">
+            לחץ על אחד היסודות כדי לראות עליו תזכורת קצרה.
+          </div>
+        </section>
+
+        <!-- 7. מתכות ואל-מתכות -->
+        <section id="section-metals" class="content-card">
+        <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מבט רחב</span>
+            <h2>מתכות, אל־מתכות וקו המדרגות</h2>
+        </div>
+
+        <p class="lead">
+            בטבלה המחזורית רוב היסודות שבשמאל ובמרכז הם <strong>מתכות</strong>,
+            ורוב היסודות שבימין הם <strong>אל־מתכות</strong>.
+            ביניהם עובר <strong>קו מדרגות אלכסוני</strong> שמפריד באופן כללי בין האזורים.
+        </p>
+
+        <div class="staircase-card">
+            <div class="staircase-card__text">
+            <h3>המחשה סכמטית של ההפרדה בטבלה המחזורית</h3>
+            <p>
+                רוב המתכות נמצאות בצד שמאל ובמרכז, רוב האל־מתכות בצד ימין,
+                וביניהן עובר קו מדרגות שמסמן את אזור המעבר.
+            </p>
+            </div>
+
+            <div class="periodic-simplified-wrap">
+            <ol class="periodic-simplified" aria-label="טבלה מחזורית סכמטית">
+                <li class="nonmetal">H</li>
+                <li class="nonmetal">He</li>
+
+                <li class="metal">Li</li>
+                <li class="metal">Be</li>
+                <li class="metalloid">B</li>
+                <li class="nonmetal">C</li>
+                <li class="nonmetal">N</li>
+                <li class="nonmetal">O</li>
+                <li class="nonmetal">F</li>
+                <li class="nonmetal">Ne</li>
+
+                <li class="metal">Na</li>
+                <li class="metal">Mg</li>
+                <li class="metal">Al</li>
+                <li class="metalloid">Si</li>
+                <li class="nonmetal">P</li>
+                <li class="nonmetal">S</li>
+                <li class="nonmetal">Cl</li>
+                <li class="nonmetal">Ar</li>
+
+                <li class="metal">K</li>
+                <li class="metal">Ca</li>
+                <li class="metal">Sc</li>
+                <li class="metal">Ti</li>
+                <li class="metal">V</li>
+                <li class="metal">Cr</li>
+                <li class="metal">Mn</li>
+                <li class="metal">Fe</li>
+                <li class="metal">Co</li>
+                <li class="metal">Ni</li>
+                <li class="metal">Cu</li>
+                <li class="metal">Zn</li>
+                <li class="metal">Ga</li>
+                <li class="metalloid">Ge</li>
+                <li class="metalloid">As</li>
+                <li class="nonmetal">Se</li>
+                <li class="nonmetal">Br</li>
+                <li class="nonmetal">Kr</li>
+
+                <li class="metal">Rb</li>
+                <li class="metal">Sr</li>
+                <li class="metal">Y</li>
+                <li class="metal">Zr</li>
+                <li class="metal">Nb</li>
+                <li class="metal">Mo</li>
+                <li class="metal">Tc</li>
+                <li class="metal">Ru</li>
+                <li class="metal">Rh</li>
+                <li class="metal">Pd</li>
+                <li class="metal">Ag</li>
+                <li class="metal">Cd</li>
+                <li class="metal">In</li>
+                <li class="metal">Sn</li>
+                <li class="metalloid">Sb</li>
+                <li class="metalloid">Te</li>
+                <li class="nonmetal">I</li>
+                <li class="nonmetal">Xe</li>
+            </ol>
+            </div>
+
+            <div class="periodic-legend">
+            <span class="legend-item"><i class="legend-swatch metal"></i> מתכות</span>
+            <span class="legend-item"><i class="legend-swatch metalloid"></i> אזור ביניים</span>
+            <span class="legend-item"><i class="legend-swatch nonmetal"></i> אל־מתכות</span>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="interactive-panel__text">
+            <h3>מיון בסיסי</h3>
+            <p>לחץ על יסוד כדי לראות אם הוא מתכת, אל־מתכת או נמצא באזור הגבול.</p>
+            </div>
+
+            <div id="metalLineGrid" class="classification-area"></div>
+
+            <div id="metalLineOutput" class="memory-output">
+            לחץ על כרטיס כדי לראות את הסיווג.
+            </div>
+        </div>
+        </section>
+
+        <!-- 8. קווייז -->
+        <section id="section-quiz" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">בדיקת הבנה</span>
+            <h2>מיני־קווייז של שיעור 1</h2>
+          </div>
+
+          <div id="quizMount"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { renderChemicalFormula, explainFormula } from "../../components/chemicalText.js";
+    import { renderMoleculeViewer } from "../../components/molecule.js";
+    import { renderQuiz } from "../../components/quiz.js";
+
+        // floating lesson progress
+    const trackedSections = [
+      { id: "section-periodic", label: "הטבלה המחזורית" },
+      { id: "section-language", label: "הכימיה היא שפה" },
+      { id: "section-basics", label: "יסוד, תרכובת ומולקולה" },
+      { id: "section-subscript", label: "ציון תחתי ומקדם" },
+      { id: "section-visual", label: "מולקולות בעיניים" },
+      { id: "section-memory", label: "יסודות מולקולריים" },
+      { id: "section-metals", label: "מתכות ואל־מתכות" },
+      { id: "section-quiz", label: "קווייז" }
+    ];
+
+    const progressLinks = [...document.querySelectorAll(".lesson-progress-link")];
+    const progressFill = document.getElementById("lessonProgressBarFill");
+    const progressPercent = document.getElementById("lessonProgressPercent");
+
+    function updateLessonProgress() {
+      let activeIndex = 0;
+
+      trackedSections.forEach((section, index) => {
+        const el = document.getElementById(section.id);
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.35) {
+          activeIndex = index;
+        }
+      });
+
+      progressLinks.forEach((link, index) => {
+        link.classList.toggle("is-active", index === activeIndex);
+      });
+
+      const percent = Math.round(((activeIndex + 1) / trackedSections.length) * 100);
+      progressFill.style.width = `${percent}%`;
+      progressPercent.textContent = `${percent}%`;
+    }
+
+    window.addEventListener("scroll", updateLessonProgress, { passive: true });
+    window.addEventListener("load", updateLessonProgress);
+    updateLessonProgress();
+
+    const heroFormula = document.getElementById("heroFormula");
+    heroFormula.innerHTML = renderChemicalFormula("2H2O");
+
+    document.querySelectorAll(".formula-slot").forEach((slot) => {
+      const formula = slot.dataset.formula;
+      slot.innerHTML = renderChemicalFormula(formula, { decorated: true });
+    });
+
+    // periodic intro
+    const periodicIntroData = [
+      { symbol: "H", name: "מימן", number: 1, note: "המספר האטומי 1 אומר שבגרעין של מימן יש פרוטון אחד." },
+      { symbol: "C", name: "פחמן", number: 6, note: "פחמן הוא יסוד מרכזי בכימיה אורגנית. המספר האטומי שלו הוא 6." },
+      { symbol: "N", name: "חנקן", number: 7, note: "חנקן הוא יסוד חשוב מאוד באוויר ובביולוגיה. המספר האטומי שלו הוא 7." },
+      { symbol: "O", name: "חמצן", number: 8, note: "חמצן מזוהה על ידי המספר האטומי 8." },
+      { symbol: "Na", name: "נתרן", number: 11, note: "נתרן הוא יסוד מתכתי. המספר האטומי שלו הוא 11." },
+      { symbol: "P", name: "זרחן", number: 15, note: "זרחן מופיע גם כמולקולה P₄. המספר האטומי שלו הוא 15." },
+      { symbol: "S", name: "גופרית", number: 16, note: "גופרית יכולה להופיע גם כ־S₈. המספר האטומי שלה הוא 16." },
+      { symbol: "Cl", name: "כלור", number: 17, note: "כלור הוא אל־מתכת ומופיע לעיתים כ־Cl₂. המספר האטומי שלו הוא 17." }
+    ];
+
+    const periodicIntroGrid = document.getElementById("periodicIntroGrid");
+    const periodicIntroOutput = document.getElementById("periodicIntroOutput");
+
+    periodicIntroGrid.innerHTML = periodicIntroData.map(item => `
+      <button class="class-card" type="button" data-symbol="${item.symbol}" data-name="${item.name}" data-number="${item.number}" data-note="${item.note}">
+        <div class="class-card__formula"><span class="chem-formula" dir="ltr">${item.symbol}</span></div>
+        <div class="class-card__footer">
+          <strong>${item.name}</strong><br>
+          מספר אטומי: ${item.number}
+        </div>
+      </button>
+    `).join("");
+
+    periodicIntroGrid.addEventListener("click", (event) => {
+      const btn = event.target.closest(".class-card");
+      if (!btn) return;
+
+      periodicIntroOutput.innerHTML = `
+        <strong><span class="chem-formula" dir="ltr">${btn.dataset.symbol}</span> — ${btn.dataset.name}</strong><br>
+        מספר אטומי: ${btn.dataset.number}<br>
+        ${btn.dataset.note}
+      `;
+    });
+
+    // classification
+    const classifyItems = [
+      { label: "2N", type: "אטומים", reason: "המקדם 2 מציין שני אטומים בודדים של חנקן." },
+      { label: "8H", type: "אטומים", reason: "שמונה אטומי מימן בודדים, לא מולקולה." },
+      { label: "P4", type: "יסוד", reason: "מולקולה המורכבת רק מאטומי זרחן." },
+      { label: "5NH3", type: "תרכובת", reason: "אמוניה מורכבת מחנקן ומימן, כלומר אטומים מסוגים שונים." },
+      { label: "Na2SO4", type: "תרכובת", reason: "יש כאן יותר מסוג אחד של אטום." },
+      { label: "K2O", type: "תרכובת", reason: "אשלגן וחמצן יחד יוצרים תרכובת." },
+      { label: "S8", type: "יסוד", reason: "כל האטומים במולקולה הם גופרית." }
+    ];
+
+    const classificationArea = document.getElementById("classificationArea");
+    classificationArea.innerHTML = classifyItems.map(item => `
+      <button class="class-card" type="button" data-type="${item.type}" data-reason="${item.reason}">
+        <div class="class-card__formula">${renderChemicalFormula(item.label)}</div>
+        <div class="class-card__footer">לחץ לגילוי</div>
+      </button>
+    `).join("");
+
+    classificationArea.addEventListener("click", (event) => {
+      const btn = event.target.closest(".class-card");
+      if (!btn) return;
+
+      btn.classList.toggle("is-revealed");
+      btn.querySelector(".class-card__footer").innerHTML = `
+        <strong>${btn.dataset.type}</strong><br>${btn.dataset.reason}
+      `;
+    });
+
+    // formula explanation
+    const explanationBox = document.getElementById("formulaExplanation");
+
+    document.querySelectorAll(".js-explain-subscript").forEach(btn => {
+      btn.addEventListener("click", () => {
+        explanationBox.innerHTML = explainFormula(btn.dataset.formula, { mode: "subscript" });
+      });
+    });
+
+    document.querySelectorAll(".js-explain-coefficient").forEach(btn => {
+      btn.addEventListener("click", () => {
+        explanationBox.innerHTML = explainFormula(btn.dataset.formula, { mode: "coefficient" });
+      });
+    });
+
+    // molecule viewer
+    const formulaSelect = document.getElementById("formulaSelect");
+    const moleculeViewer = document.getElementById("moleculeViewer");
+    const moleculeLegend = document.getElementById("moleculeLegend");
+
+    function drawSelectedMolecule() {
+      renderMoleculeViewer(formulaSelect.value, moleculeViewer, moleculeLegend);
+    }
+
+    formulaSelect.addEventListener("change", drawSelectedMolecule);
+    drawSelectedMolecule();
+
+    // molecular elements memory
+    const memoryNotes = {
+      H2: "מימן — גז דו־אטומי. בטבע מופיע כמולקולה של שני אטומים.",
+      O2: "חמצן — גז דו־אטומי. זהו החמצן שאנו נושמים.",
+      N2: "חנקן — גז דו־אטומי ונפוץ מאוד באוויר.",
+      F2: "פלואור — גז דו־אטומי.",
+      Cl2: "כלור — גז דו־אטומי.",
+      Br2: "ברום — נוזל דו־אטומי.",
+      I2: "יוד — מוצק דו־אטומי.",
+      O3: "אוזון — מולקולה מיוחדת של שלושה אטומי חמצן. עדיין יסוד, לא תרכובת.",
+      S8: "גופרית — מופיעה לעיתים כמולקולת S₈.",
+      P4: "זרחן — יכול להופיע כמולקולת P₄."
+    };
+
+    const memoryOutput = document.getElementById("memoryOutput");
+    document.querySelectorAll(".memory-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.memory;
+        memoryOutput.innerHTML = `<strong>${renderChemicalFormula(key)}</strong> — ${memoryNotes[key]}`;
+      });
+    });
+
+    // metals / nonmetals / staircase line
+    const metalLineData = [
+      { symbol: "Na", name: "נתרן", group: "מתכת", note: "נתרן נמצא בצד השמאלי של הטבלה ולכן הוא מתכת." },
+      { symbol: "K", name: "אשלגן", group: "מתכת", note: "אשלגן הוא מתכת פעילה מאוד." },
+      { symbol: "Mg", name: "מגנזיום", group: "מתכת", note: "מגנזיום שייך לאזור המתכות." },
+      { symbol: "O", name: "חמצן", group: "אל־מתכת", note: "חמצן נמצא בצד הימני של הטבלה ולכן הוא אל־מתכת." },
+      { symbol: "N", name: "חנקן", group: "אל־מתכת", note: "חנקן הוא אל־מתכת." },
+      { symbol: "Cl", name: "כלור", group: "אל־מתכת", note: "כלור נמצא באזור האל־מתכות." },
+      { symbol: "B", name: "בורון", group: "אזור הגבול", note: "בורון נמצא ליד קו המדרגות ונחשב יסוד בעל אופי ביניים." },
+      { symbol: "Si", name: "צורן", group: "אזור הגבול", note: "צורן נמצא באזור קו המדרגות, בין מתכות לאל־מתכות." }
+    ];
+
+    const metalLineGrid = document.getElementById("metalLineGrid");
+    const metalLineOutput = document.getElementById("metalLineOutput");
+
+    metalLineGrid.innerHTML = metalLineData.map(item => `
+      <button class="class-card" type="button" data-symbol="${item.symbol}" data-name="${item.name}" data-group="${item.group}" data-note="${item.note}">
+        <div class="class-card__formula"><span class="chem-formula" dir="ltr">${item.symbol}</span></div>
+        <div class="class-card__footer">לחץ לגילוי</div>
+      </button>
+    `).join("");
+
+    metalLineGrid.addEventListener("click", (event) => {
+      const btn = event.target.closest(".class-card");
+      if (!btn) return;
+
+      metalLineOutput.innerHTML = `
+        <strong><span class="chem-formula" dir="ltr">${btn.dataset.symbol}</span> — ${btn.dataset.name}</strong><br>
+        סיווג: <strong>${btn.dataset.group}</strong><br>
+        ${btn.dataset.note}
+      `;
+    });
+
+    // quiz
+    const quizData = [
+      {
+        question: "מהו מספר אטומי?",
+        answers: [
+          "מספר הנויטרונים באטום",
+          "מספר הפרוטונים בגרעין",
+          "מספר האלקטרונים תמיד"
+        ],
+        correctIndex: 1,
+        explanation: "המספר האטומי מוגדר כמספר הפרוטונים בגרעין, והוא מזהה את היסוד."
+      },
+      {
+        question: "סוכר C6H12O6 הוא...",
+        answers: ["יסוד", "תרכובת"],
+        correctIndex: 1,
+        explanation: "יש כאן פחמן, מימן וחמצן — כלומר יותר מסוג אחד של אטום."
+      },
+      {
+        question: "אוזון O3 הוא...",
+        answers: ["יסוד", "תרכובת"],
+        correctIndex: 0,
+        explanation: "כל האטומים במולקולה הם חמצן, לכן זה יסוד מולקולרי."
+      },
+      {
+        question: "מה אומר הציון התחתי ב־H2O?",
+        answers: [
+          "שיש שתי מולקולות מים",
+          "שיש שני אטומי מימן במולקולה אחת",
+          "שיש שני אטומי חמצן"
+        ],
+        correctIndex: 1,
+        explanation: "ה-2 מתייחס רק למימן, כי הוא מופיע מיד אחרי H."
+      },
+      {
+        question: "מהו המקדם ב־4NH3?",
+        answers: ["3", "4", "1"],
+        correctIndex: 1,
+        explanation: "מקדם מופיע לפני כל הנוסחה. כאן הוא 4."
+      },
+      {
+        question: "באופן כללי, היכן נמצאות רוב המתכות בטבלה המחזורית?",
+        answers: [
+          "בצד שמאל ובמרכז",
+          "רק בצד ימין",
+          "רק בשורה העליונה"
+        ],
+        correctIndex: 0,
+        explanation: "רוב המתכות נמצאות בצד שמאל ובמרכז הטבלה, בעוד שרוב האל־מתכות בימין."
+      }
+    ];
+
+    renderQuiz("quizMount", quizData);
+  </script>
+</body>
+</html>
