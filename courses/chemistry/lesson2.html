@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שיעור 2 | מודל האטום</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles/main.css" />
+<style>
+  .atom-mini-grid,
+  .particle-grid,
+  .periodic-cell-grid,
+  .isotope-grid,
+  .ion-controls,
+  .quick-facts-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .atom-mini-grid,
+  .particle-grid,
+  .periodic-cell-grid,
+  .isotope-grid,
+  .quick-facts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .atom-card,
+  .particle-card,
+  .periodic-cell-card,
+  .isotope-card,
+  .ion-card,
+  .mass-card,
+  .shell-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+    padding: 18px;
+  }
+
+.atom-hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.atom-diagram {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.atom-diagram .shell {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px dashed rgba(47, 111, 214, 0.20);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.atom-diagram .shell--1 {
+  width: 84px;
+  height: 84px;
+}
+
+.atom-diagram .shell--2 {
+  width: 140px;
+  height: 140px;
+}
+
+.atom-diagram .shell--3 {
+  width: 196px;
+  height: 196px;
+}
+
+.atom-diagram .nucleus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78px;
+  height: 78px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffdad8, #f25f5c 65%);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-family: "Fredoka", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 14px 30px rgba(242, 95, 92, 0.28);
+  z-index: 3;
+}
+
+.atom-diagram .electron {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8dd6ff, #2f6fd6);
+  box-shadow: 0 6px 14px rgba(47, 111, 214, 0.24);
+  z-index: 4;
+}
+
+.atom-diagram .electron--1 {
+  top: 12px;
+  left: 102px;
+}
+
+.atom-diagram .electron--2 {
+  top: 58px;
+  right: 20px;
+}
+
+.atom-diagram .electron--3 {
+  bottom: 20px;
+  left: 50px;
+}
+
+.atom-diagram .electron--4 {
+  top: 58px;
+  left: 20px;
+}
+
+@media (max-width: 980px) {
+  .lesson-hero__visual {
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .atom-diagram {
+    width: 190px;
+    height: 190px;
+  }
+
+  .atom-diagram .shell--1 {
+    width: 72px;
+    height: 72px;
+  }
+
+  .atom-diagram .shell--2 {
+    width: 120px;
+    height: 120px;
+  }
+
+  .atom-diagram .shell--3 {
+    width: 168px;
+    height: 168px;
+  }
+
+  .atom-diagram .nucleus {
+    width: 66px;
+    height: 66px;
+    font-size: 0.9rem;
+  }
+
+  .atom-diagram .electron--1 {
+    top: 10px;
+    left: 87px;
+  }
+
+  .atom-diagram .electron--2 {
+    top: 48px;
+    right: 16px;
+  }
+
+  .atom-diagram .electron--3 {
+    bottom: 16px;
+    left: 42px;
+  }
+
+  .atom-diagram .electron--4 {
+    top: 48px;
+    left: 16px;
+  }
+}
+
+  .atom-caption {
+    margin-top: 16px;
+    text-align: center;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .particle-card__badge,
+  .topic-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .badge-proton { background: rgba(242, 95, 92, 0.14); color: #c2413b; }
+  .badge-neutron { background: rgba(95, 114, 135, 0.12); color: #4d6074; }
+  .badge-electron { background: rgba(47, 111, 214, 0.12); color: #1f57ad; }
+
+  .stat-list {
+    margin: 12px 0 0;
+    padding-right: 18px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  .builder-layout,
+  .isotope-layout,
+  .ion-layout,
+  .mass-layout,
+  .shell-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .builder-controls,
+  .ion-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+  }
+
+  .control-box {
+    background: linear-gradient(135deg, rgba(47, 111, 214, 0.06), rgba(255,255,255,0.96));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .control-box label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .control-box input[type="range"] {
+    width: 100%;
+  }
+
+  .range-value {
+    display: inline-flex;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(47, 111, 214, 0.10);
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 0.92rem;
+  }
+
+  .builder-output,
+  .mass-output,
+  .ion-output,
+  .shell-output {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    min-height: 220px;
+  }
+
+  .big-number {
+    font-family: "Fredoka", sans-serif;
+    font-size: 2rem;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .equation-line {
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .periodic-demo-cell {
+    width: min(100%, 220px);
+    min-height: 220px;
+    margin: 0 auto;
+    border-radius: 24px;
+    border: 2px solid rgba(47, 111, 214, 0.18);
+    background: linear-gradient(135deg, rgba(47,111,214,0.05), rgba(255,255,255,0.98));
+    padding: 16px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .periodic-demo-cell__number {
+    justify-self: start;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+  }
+
+  .periodic-demo-cell__symbol {
+    align-self: center;
+    justify-self: center;
+    font-family: "Fredoka", sans-serif;
+    font-size: 3.2rem;
+    color: var(--primary-dark);
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  .periodic-demo-cell__name {
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  .periodic-demo-cell__mass {
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .selector-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .selector-btn {
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: white;
+    cursor: pointer;
+    font-weight: 800;
+    color: var(--primary-dark);
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+
+  .selector-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .selector-btn.is-active {
+    background: linear-gradient(135deg, rgba(47,111,214,0.12), rgba(255,211,77,0.18));
+    border-color: rgba(47,111,214,0.22);
+  }
+
+  .isotope-nucleus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .nucleon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .nucleon--proton { background: #f25f5c; }
+  .nucleon--neutron { background: #7a8a9a; }
+
+    .ion-atom-diagram,
+    .shell-rings {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+    max-width: 100%;
+    }
+
+    .ring--1 { width: 84px; height: 84px; }
+    .ring--2 { width: 144px; height: 144px; }
+    .ring--3 { width: 204px; height: 204px; }
+
+  .center-core {
+    position: absolute;
+    inset: 50%;
+    width: 50px;
+    height: 50px;
+    transform: translate(50%, -50%);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 8px;
+    color: white;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f25f5c, #c2413b);
+    box-shadow: 0 12px 24px rgba(242, 95, 92, 0.26);
+  }
+
+  .ion-electron,
+  .shell-electron {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8dd6ff, #2f6fd6);
+    box-shadow: 0 6px 14px rgba(47,111,214,0.24);
+  }
+
+  .shell-note,
+  .ion-note {
+    margin-top: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .summary-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--primary-dark);
+    font-weight: 800;
+  }
+
+  @media (max-width: 980px) {
+    .builder-layout,
+    .isotope-layout,
+    .ion-layout,
+    .mass-layout,
+    .shell-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .lesson-hero__visual {
+      min-height: 260px;
+    }
+
+    .atom-hero-visual {
+      padding: 10px 0 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .atom-diagram {
+      width: 200px;
+      height: 200px;
+    }
+
+    .shell--1 { width: 76px; height: 76px; }
+    .shell--2 { width: 126px; height: 126px; }
+    .shell--3 { width: 176px; height: 176px; }
+
+    .nucleus {
+      width: 70px;
+      height: 70px;
+      font-size: 0.9rem;
+    }
+
+    .electron--1 { top: 12px; left: 92px; }
+    .electron--2 { top: 52px; right: 18px; }
+    .electron--3 { bottom: 18px; left: 48px; }
+    .electron--4 { top: 52px; left: 18px; }
+
+    .ion-atom-diagram,
+    .shell-rings {
+    width: 190px;
+    height: 190px;
+    }
+
+    .ring--1 { width: 84px; height: 84px; }
+    .ring--2 { width: 144px; height: 144px; }
+    .ring--3 { width: 204px; height: 204px; }
+
+    .center-core {
+    width: 68px;
+    height: 68px;
+    font-size: 0.86rem;
+    }
+  }
+</style>
+</head>
+<body class="site-body">
+  <div class="page-shell">
+    <header class="lesson-hero">
+      <a class="back-link" href="../../index.html">← חזרה לדף הבית</a>
+
+      <div class="lesson-hero__content">
+        <span class="lesson-hero__tag">מבואות הכימיה</span>
+        <h1>שיעור 2 — מודל האטום</h1>
+        <p>
+          מהו אטום, מהם החלקיקים שמרכיבים אותו, מה ההבדל בין מספר אטומי למספר מסה,
+          איך קוראים תא בטבלה המחזורית, מה הם איזוטופים, רמות אנרגיה, ויונים.
+        </p>
+      </div>
+
+      <div class="lesson-hero__visual atom-hero-visual">
+        <div class="atom-diagram">
+          <div class="shell shell--1"></div>
+          <div class="shell shell--2"></div>
+          <div class="shell shell--3"></div>
+          <div class="nucleus">גרעין</div>
+          <div class="electron electron--1"></div>
+          <div class="electron electron--2"></div>
+          <div class="electron electron--3"></div>
+          <div class="electron electron--4"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="lesson-layout">
+      <aside class="lesson-sidebar">
+        <div class="lesson-progress-card">
+          <div class="lesson-progress-card__top">
+            <h3>איפה אני בשיעור?</h3>
+            <span id="lessonProgressPercent" class="lesson-progress-card__percent">0%</span>
+          </div>
+
+          <div class="lesson-progress-bar">
+            <div id="lessonProgressBarFill" class="lesson-progress-bar__fill"></div>
+          </div>
+
+          <nav class="lesson-progress-nav" aria-label="ניווט בשיעור">
+            <a href="#section-model" class="lesson-progress-link is-active">מהו מודל</a>
+            <a href="#section-particles" class="lesson-progress-link">חלקיקי האטום</a>
+            <a href="#section-atomic" class="lesson-progress-link">מספר אטומי ומספר מסה</a>
+            <a href="#section-cell" class="lesson-progress-link">קריאת תא בטבלה</a>
+            <a href="#section-isotopes" class="lesson-progress-link">איזוטופים</a>
+            <a href="#section-average-mass" class="lesson-progress-link">מסה אטומית ממוצעת</a>
+            <a href="#section-shells" class="lesson-progress-link">רמות אנרגיה</a>
+            <a href="#section-ions" class="lesson-progress-link">יונים</a>
+            <a href="#section-quiz" class="lesson-progress-link">קווייז</a>
+          </nav>
+        </div>
+
+        <div class="side-card side-card--accent">
+          <h3>עיקרון מפתח</h3>
+          <p>
+            מספר אטומי = מספר הפרוטונים.  
+            מספר מסה = פרוטונים + ניוטרונים.  
+            יון נוצר כשאטום מאבד או מקבל אלקטרונים.
+          </p>
+        </div>
+      </aside>
+
+      <section class="lesson-main">
+        <section id="section-model" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">פתיחה</span>
+            <h2>מהו מודל ולמה צריך אותו?</h2>
+          </div>
+
+          <p class="lead">
+            האטום קטן מדי מכדי לראות אותו בעין, ולכן לומדים אותו דרך <strong>מודל</strong> —
+            ייצוג פשוט שעוזר להבין איך החומר בנוי. המודל לא “מצלם” את האטום,
+            אלא עוזר לנו לחשוב עליו בצורה מסודרת.
+          </p>
+
+          <div class="atom-mini-grid">
+            <article class="atom-card">
+              <span class="topic-badge">מודל</span>
+              <h3>מה המודל נותן לנו?</h3>
+              <p>להבין אילו חלקיקים יש באטום, איפה הם נמצאים, ומה תפקידם.</p>
+            </article>
+
+            <article class="atom-card">
+              <span class="topic-badge">מבנה</span>
+              <h3>מה יש באטום?</h3>
+              <p>גרעין במרכז, ובו פרוטונים וניוטרונים, ומחוץ לגרעין אלקטרונים.</p>
+            </article>
+
+            <article class="atom-card">
+              <span class="topic-badge">מטרה</span>
+              <h3>למה זה חשוב?</h3>
+              <p>כי כל הכימיה בהמשך בנויה על הבנת מבנה האטום והאלקטרונים שבו.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="section-particles" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מושגי יסוד</span>
+            <h2>חלקיקי האטום</h2>
+          </div>
+
+          <div class="particle-grid">
+            <article class="particle-card">
+              <span class="particle-card__badge badge-proton">פרוטון</span>
+              <h3>פרוטון</h3>
+              <ul class="stat-list">
+                <li>מטען: חיובי</li>
+                <li>מיקום: בגרעין</li>
+                <li>תפקיד: קובע את זהות היסוד</li>
+              </ul>
+            </article>
+
+            <article class="particle-card">
+              <span class="particle-card__badge badge-neutron">ניוטרון</span>
+              <h3>ניוטרון</h3>
+              <ul class="stat-list">
+                <li>מטען: ניטרלי</li>
+                <li>מיקום: בגרעין</li>
+                <li>תפקיד: משפיע על המסה ועל האיזוטופ</li>
+              </ul>
+            </article>
+
+            <article class="particle-card">
+              <span class="particle-card__badge badge-electron">אלקטרון</span>
+              <h3>אלקטרון</h3>
+              <ul class="stat-list">
+                <li>מטען: שלילי</li>
+                <li>מיקום: מחוץ לגרעין</li>
+                <li>תפקיד: חשוב לקשרים, יונים ותגובה כימית</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="interactive-panel">
+            <div class="interactive-panel__text">
+              <h3>לחץ על חלקיק</h3>
+              <p>כדי לראות תזכורת קצרה על המיקום, המטען והתפקיד שלו.</p>
+            </div>
+
+            <div class="selector-row" id="particleButtons">
+              <button class="selector-btn is-active" data-particle="proton">פרוטון</button>
+              <button class="selector-btn" data-particle="neutron">ניוטרון</button>
+              <button class="selector-btn" data-particle="electron">אלקטרון</button>
+            </div>
+
+            <div id="particleOutput" class="memory-output"></div>
+          </div>
+        </section>
+
+        <section id="section-atomic" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">חישוב</span>
+            <h2>מספר אטומי ומספר מסה</h2>
+          </div>
+
+          <div class="builder-layout">
+            <div class="builder-controls">
+              <div class="control-box">
+                <label for="protonRange">מספר פרוטונים</label>
+                <input id="protonRange" type="range" min="1" max="20" value="8" />
+                <span id="protonValue" class="range-value">8</span>
+              </div>
+
+              <div class="control-box">
+                <label for="neutronRange">מספר ניוטרונים</label>
+                <input id="neutronRange" type="range" min="0" max="30" value="8" />
+                <span id="neutronValue" class="range-value">8</span>
+              </div>
+            </div>
+
+            <div id="atomicBuilderOutput" class="builder-output"></div>
+          </div>
+        </section>
+
+        <section id="section-cell" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">הטבלה המחזורית</span>
+            <h2>איך קוראים תא בטבלה המחזורית?</h2>
+          </div>
+
+          <div class="periodic-cell-grid">
+            <article class="periodic-cell-card">
+              <div id="periodicDemoCell" class="periodic-demo-cell"></div>
+            </article>
+
+            <article class="periodic-cell-card">
+              <h3>מה רואים בתא?</h3>
+              <ul class="stat-list">
+                <li><strong>מספר אטומי</strong> — מספר הפרוטונים</li>
+                <li><strong>סמל</strong> — קיצור השם של היסוד</li>
+                <li><strong>שם היסוד</strong> — בעברית</li>
+                <li><strong>מסה אטומית ממוצעת</strong> — לרוב מספר עשרוני</li>
+              </ul>
+
+              <div class="selector-row" id="cellButtons">
+                <button class="selector-btn is-active" data-element="O">O</button>
+                <button class="selector-btn" data-element="Na">Na</button>
+                <button class="selector-btn" data-element="Cl">Cl</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="section-isotopes" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">איזוטופים</span>
+            <h2>אותו יסוד, מסה שונה</h2>
+          </div>
+
+          <p class="lead">
+            איזוטופים הם אטומים של אותו יסוד, כלומר עם אותו מספר פרוטונים,
+            אבל עם מספר שונה של ניוטרונים.
+          </p>
+
+          <div class="isotope-layout">
+            <div>
+              <div class="selector-row" id="isotopeButtons">
+                <button class="selector-btn is-active" data-isotope="protium">פרוטיום</button>
+                <button class="selector-btn" data-isotope="deuterium">דויטריום</button>
+                <button class="selector-btn" data-isotope="tritium">טריטיום</button>
+              </div>
+
+              <div id="isotopeOutput" class="memory-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div class="isotope-card">
+              <h3>הגרעין של האיזוטופ</h3>
+              <div id="isotopeNucleus" class="isotope-nucleus"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-average-mass" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">עוד צעד</span>
+            <h2>מהי מסה אטומית ממוצעת?</h2>
+          </div>
+
+          <div class="mass-layout">
+            <div class="mass-card">
+              <h3>הרעיון</h3>
+              <p class="lead">
+                בטבלה המחזורית לרוב לא כתוב מספר שלם, אלא מספר עשרוני,
+                כי הוא מייצג <strong>ממוצע משוקלל</strong> של האיזוטופים השונים של היסוד בטבע.
+              </p>
+              <div class="summary-chip-row">
+                <span class="summary-chip">איזוטופ 1 → מסה אחת</span>
+                <span class="summary-chip">איזוטופ 2 → מסה אחרת</span>
+                <span class="summary-chip">בטבלה → ממוצע</span>
+              </div>
+            </div>
+
+            <div id="averageMassOutput" class="mass-output"></div>
+          </div>
+        </section>
+
+        <section id="section-shells" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">אלקטרונים</span>
+            <h2>רמות אנרגיה ואלקטרוני ערכיות</h2>
+          </div>
+
+          <div class="shell-layout">
+            <div class="shell-card">
+              <div class="selector-row" id="shellButtons">
+                <button class="selector-btn is-active" data-shell-element="Li">Li</button>
+                <button class="selector-btn" data-shell-element="O">O</button>
+                <button class="selector-btn" data-shell-element="Na">Na</button>
+                <button class="selector-btn" data-shell-element="Cl">Cl</button>
+              </div>
+
+              <div id="shellOutputText" class="memory-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div id="shellDiagramOutput" class="shell-output"></div>
+          </div>
+        </section>
+
+        <section id="section-ions" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">יונים</span>
+            <h2>מהו יון ואיך הוא נוצר?</h2>
+          </div>
+
+          <p class="lead">
+            יון הוא אטום או חלקיק שקיבל או איבד אלקטרונים.  
+            אם הוא איבד אלקטרונים הוא נעשה חיובי, ואם הוא קיבל אלקטרונים הוא נעשה שלילי.
+          </p>
+
+          <div class="ion-layout">
+            <div class="ion-card">
+              <div class="selector-row" id="ionButtons">
+                <button class="selector-btn is-active" data-ion="Na">Na</button>
+                <button class="selector-btn" data-ion="Mg">Mg</button>
+                <button class="selector-btn" data-ion="Cl">Cl</button>
+                <button class="selector-btn" data-ion="O">O</button>
+              </div>
+
+              <div id="ionTextOutput" class="memory-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div id="ionDiagramOutput" class="ion-output"></div>
+          </div>
+        </section>
+
+        <section id="section-quiz" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">בדיקת הבנה</span>
+            <h2>מיני־קווייז של שיעור 2</h2>
+          </div>
+
+          <div id="quizMount"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+    <script type="module">
+    import { renderQuiz } from "../../components/quiz.js";
+
+    // particle explainer
+    const particleData = {
+        proton: {
+        title: "פרוטון",
+        text: "לפרוטון יש מטען חיובי. הוא נמצא בגרעין, והוא החלקיק שקובע את זהות היסוד. אם יש לאטום 8 פרוטונים — זה חמצן."
+        },
+        neutron: {
+        title: "ניוטרון",
+        text: "לניוטרון אין מטען. הוא נמצא בגרעין, ומשפיע על המסה ועל סוג האיזוטופ של היסוד."
+        },
+        electron: {
+        title: "אלקטרון",
+        text: "לאלקטרון יש מטען שלילי. הוא נמצא מחוץ לגרעין, ומשחק תפקיד חשוב ברמות אנרגיה, קשרים כימיים ויונים."
+        }
+    };
+
+    const particleButtons = document.querySelectorAll("#particleButtons .selector-btn");
+    const particleOutput = document.getElementById("particleOutput");
+
+    function renderParticle(particle) {
+        particleOutput.innerHTML = `<strong>${particleData[particle].title}</strong><br>${particleData[particle].text}`;
+        particleButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.particle === particle));
+    }
+
+    particleButtons.forEach(btn => {
+        btn.addEventListener("click", () => renderParticle(btn.dataset.particle));
+    });
+
+    renderParticle("proton");
+
+    // atomic number / mass builder
+    const protonRange = document.getElementById("protonRange");
+    const neutronRange = document.getElementById("neutronRange");
+    const protonValue = document.getElementById("protonValue");
+    const neutronValue = document.getElementById("neutronValue");
+    const atomicBuilderOutput = document.getElementById("atomicBuilderOutput");
+
+    const elementMap = {
+        1: "H",
+        2: "He",
+        3: "Li",
+        4: "Be",
+        5: "B",
+        6: "C",
+        7: "N",
+        8: "O",
+        9: "F",
+        10: "Ne",
+        11: "Na",
+        12: "Mg",
+        13: "Al",
+        14: "Si",
+        15: "P",
+        16: "S",
+        17: "Cl",
+        18: "Ar",
+        19: "K",
+        20: "Ca"
+    };
+
+    function updateAtomicBuilder() {
+        const protons = Number(protonRange.value);
+        const neutrons = Number(neutronRange.value);
+        const mass = protons + neutrons;
+        const symbol = elementMap[protons] || "?";
+
+        protonValue.textContent = protons;
+        neutronValue.textContent = neutrons;
+
+        atomicBuilderOutput.innerHTML = `
+        <div class="big-number">${symbol}</div>
+        <p><strong>מספר אטומי:</strong> ${protons}</p>
+        <p><strong>מספר מסה:</strong> ${mass}</p>
+        <p>כי:</p>
+        <div class="equation-line">${mass} = ${protons} + ${neutrons}</div>
+        <p class="shell-note">
+            מספר אטומי תמיד שווה למספר הפרוטונים.  
+            מספר מסה הוא סכום הפרוטונים והניוטרונים.
+        </p>
+        `;
+    }
+
+    protonRange.addEventListener("input", updateAtomicBuilder);
+    neutronRange.addEventListener("input", updateAtomicBuilder);
+    updateAtomicBuilder();
+
+    // periodic cell demo
+    const cellData = {
+        O: { number: 8, symbol: "O", name: "חמצן", mass: "16.00" },
+        Na: { number: 11, symbol: "Na", name: "נתרן", mass: "22.99" },
+        Cl: { number: 17, symbol: "Cl", name: "כלור", mass: "35.45" }
+    };
+
+    const periodicDemoCell = document.getElementById("periodicDemoCell");
+    const cellButtons = document.querySelectorAll("#cellButtons .selector-btn");
+
+    function renderPeriodicCell(key) {
+        const item = cellData[key];
+        periodicDemoCell.innerHTML = `
+        <div class="periodic-demo-cell__number">${item.number}</div>
+        <div class="periodic-demo-cell__symbol">${item.symbol}</div>
+        <div>
+            <div class="periodic-demo-cell__name">${item.name}</div>
+            <div class="periodic-demo-cell__mass">${item.mass}</div>
+        </div>
+        `;
+        cellButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.element === key));
+    }
+
+    cellButtons.forEach(btn => btn.addEventListener("click", () => renderPeriodicCell(btn.dataset.element)));
+    renderPeriodicCell("O");
+
+    // isotopes
+    const isotopeData = {
+        protium: {
+        title: "פרוטיום",
+        text: "האיזוטופ הנפוץ של מימן: פרוטון אחד, 0 ניוטרונים.",
+        protons: 1,
+        neutrons: 0
+        },
+        deuterium: {
+        title: "דויטריום",
+        text: "איזוטופ של מימן עם פרוטון אחד וניוטרון אחד.",
+        protons: 1,
+        neutrons: 1
+        },
+        tritium: {
+        title: "טריטיום",
+        text: "איזוטופ של מימן עם פרוטון אחד ושני ניוטרונים.",
+        protons: 1,
+        neutrons: 2
+        }
+    };
+
+    const isotopeButtons = document.querySelectorAll("#isotopeButtons .selector-btn");
+    const isotopeOutput = document.getElementById("isotopeOutput");
+    const isotopeNucleus = document.getElementById("isotopeNucleus");
+
+    function renderIsotope(key) {
+        const iso = isotopeData[key];
+        isotopeOutput.innerHTML = `
+        <strong>${iso.title}</strong><br>
+        ${iso.text}<br>
+        מספר אטומי: ${iso.protons}<br>
+        מספר מסה: ${iso.protons + iso.neutrons}
+        `;
+
+        isotopeNucleus.innerHTML = "";
+        for (let i = 0; i < iso.protons; i++) {
+        isotopeNucleus.innerHTML += `<div class="nucleon nucleon--proton">p</div>`;
+        }
+        for (let i = 0; i < iso.neutrons; i++) {
+        isotopeNucleus.innerHTML += `<div class="nucleon nucleon--neutron">n</div>`;
+        }
+
+        isotopeButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.isotope === key));
+    }
+
+    isotopeButtons.forEach(btn => btn.addEventListener("click", () => renderIsotope(btn.dataset.isotope)));
+    renderIsotope("protium");
+
+    // average mass
+    const averageMassOutput = document.getElementById("averageMassOutput");
+    averageMassOutput.innerHTML = `
+        <div class="big-number">1.01</div>
+        <p><strong>דוגמה:</strong> מימן</p>
+        <p>למימן יש כמה איזוטופים. בטבע הם לא מופיעים בדיוק באותה שכיחות, ולכן המסה שמופיעה בטבלה היא ממוצע.</p>
+        <div class="equation-line">mass in table ≈ weighted average</div>
+        <p class="shell-note">לכן בטבלה רואים לעיתים קרובות מספר עשרוני ולא מספר שלם.</p>
+    `;
+
+    // shells / valence electrons
+    const shellData = {
+        Li: { name: "ליתיום", shellText: "2,1", valence: 1, symbol: "Li" },
+        O: { name: "חמצן", shellText: "2,6", valence: 6, symbol: "O" },
+        Na: { name: "נתרן", shellText: "2,8,1", valence: 1, symbol: "Na" },
+        Cl: { name: "כלור", shellText: "2,8,7", valence: 7, symbol: "Cl" }
+    };
+
+    const shellButtons = document.querySelectorAll("#shellButtons .selector-btn");
+    const shellOutputText = document.getElementById("shellOutputText");
+    const shellDiagramOutput = document.getElementById("shellDiagramOutput");
+
+    function electronPositions(count, diameter, containerSize = 220, electronSize = 16) {
+        const center = containerSize / 2;
+        const radius = diameter / 2;
+        const offset = electronSize / 2;
+        const positions = [];
+
+        if (count === 1) {
+        positions.push({
+            x: center - offset,
+            y: center - radius - offset
+        });
+        return positions;
+        }
+
+        for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count - Math.PI / 2;
+        const x = center + radius * Math.cos(angle) - offset;
+        const y = center + radius * Math.sin(angle) - offset;
+        positions.push({ x, y });
+        }
+
+        return positions;
+    }
+
+    function renderShells(key) {
+        const item = shellData[key];
+        const shells = item.shellText.split(",").map(Number);
+
+        shellOutputText.innerHTML = `
+        <strong>${item.name} (${item.symbol})</strong><br>
+        פיזור אלקטרונים: ${item.shellText}<br>
+        אלקטרוני ערכיות: ${item.valence}<br>
+        האטום נוטה להגיע לרמה חיצונית יציבה.
+        `;
+
+        const diameters = [84, 144, 204];
+        const containerSize = 220;
+        let electronsHtml = "";
+
+        shells.forEach((count, index) => {
+        const pos = electronPositions(count, diameters[index], containerSize, 16);
+        pos.forEach((p) => {
+            electronsHtml += `<div class="shell-electron" style="left:${p.x}px; top:${p.y}px;"></div>`;
+        });
+        });
+
+        shellDiagramOutput.innerHTML = `
+        <div class="shell-rings">
+            <div class="ring ring--1"></div>
+            <div class="ring ring--2"></div>
+            <div class="ring ring--3"></div>
+            <div class="center-core">${item.symbol}</div>
+            ${electronsHtml}
+        </div>
+        <div class="shell-note">
+            האלקטרונים ברמה החיצונית נקראים <strong>אלקטרוני ערכיות</strong>,
+            והם חשובים מאוד לקשרים וליונים.
+        </div>
+        `;
+
+        shellButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.shellElement === key));
+    }
+
+    shellButtons.forEach(btn => btn.addEventListener("click", () => renderShells(btn.dataset.shellElement)));
+    renderShells("Li");
+
+    // ions
+    const ionData = {
+        Na: {
+        symbol: "Na",
+        name: "נתרן",
+        neutral: "2,8,1",
+        ion: "Na⁺",
+        ionText: "2,8",
+        action: "מאבד אלקטרון אחד",
+        charge: "+1"
+        },
+        Mg: {
+        symbol: "Mg",
+        name: "מגנזיום",
+        neutral: "2,8,2",
+        ion: "Mg²⁺",
+        ionText: "2,8",
+        action: "מאבד שני אלקטרונים",
+        charge: "+2"
+        },
+        Cl: {
+        symbol: "Cl",
+        name: "כלור",
+        neutral: "2,8,7",
+        ion: "Cl⁻",
+        ionText: "2,8,8",
+        action: "מקבל אלקטרון אחד",
+        charge: "-1"
+        },
+        O: {
+        symbol: "O",
+        name: "חמצן",
+        neutral: "2,6",
+        ion: "O²⁻",
+        ionText: "2,8",
+        action: "מקבל שני אלקטרונים",
+        charge: "-2"
+        }
+    };
+
+    const ionButtons = document.querySelectorAll("#ionButtons .selector-btn");
+    const ionTextOutput = document.getElementById("ionTextOutput");
+    const ionDiagramOutput = document.getElementById("ionDiagramOutput");
+
+    function renderIon(key) {
+        const item = ionData[key];
+
+        ionTextOutput.innerHTML = `
+        <strong>${item.name} (${item.symbol})</strong><br>
+        אטום ניטרלי: ${item.neutral}<br>
+        כדי להגיע ליון יציב הוא ${item.action}.<br>
+        היון המתקבל: <strong dir="ltr">${item.ion}</strong><br>
+        פיזור אלקטרונים ביון: ${item.ionText}
+        `;
+
+        const shells = item.ionText.split(",").map(Number);
+        const diameters = [84, 144, 204];
+        const containerSize = 220;
+        let electronsHtml = "";
+
+        shells.forEach((count, index) => {
+        const pos = electronPositions(count, diameters[index], containerSize, 16);
+        pos.forEach((p) => {
+            electronsHtml += `<div class="ion-electron" style="left:${p.x}px; top:${p.y}px;"></div>`;
+        });
+        });
+
+        ionDiagramOutput.innerHTML = `
+        <div class="ion-atom-diagram">
+            <div class="ring ring--1"></div>
+            <div class="ring ring--2"></div>
+            <div class="ring ring--3"></div>
+            <div class="center-core" dir="ltr">${item.ion}</div>
+            ${electronsHtml}
+        </div>
+        <div class="ion-note">
+            יון חיובי נוצר מאיבוד אלקטרונים.  
+            יון שלילי נוצר מקבלת אלקטרונים.
+        </div>
+        `;
+
+        ionButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.ion === key));
+    }
+
+    ionButtons.forEach(btn => btn.addEventListener("click", () => renderIon(btn.dataset.ion)));
+    renderIon("Na");
+
+    // progress
+    const trackedSections = [
+        "section-model",
+        "section-particles",
+        "section-atomic",
+        "section-cell",
+        "section-isotopes",
+        "section-average-mass",
+        "section-shells",
+        "section-ions",
+        "section-quiz"
+    ];
+
+    const progressLinks = [...document.querySelectorAll(".lesson-progress-link")];
+    const progressFill = document.getElementById("lessonProgressBarFill");
+    const progressPercent = document.getElementById("lessonProgressPercent");
+
+    function updateLessonProgress() {
+        let activeIndex = 0;
+
+        trackedSections.forEach((id, index) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.35) {
+            activeIndex = index;
+        }
+        });
+
+        progressLinks.forEach((link, index) => {
+        link.classList.toggle("is-active", index === activeIndex);
+        });
+
+        const percent = Math.round(((activeIndex + 1) / trackedSections.length) * 100);
+        progressFill.style.width = `${percent}%`;
+        progressPercent.textContent = `${percent}%`;
+    }
+
+    window.addEventListener("scroll", updateLessonProgress, { passive: true });
+    window.addEventListener("load", updateLessonProgress);
+    updateLessonProgress();
+
+    // quiz
+    const quizData = [
+        {
+        question: "מה קובע את זהות היסוד?",
+        answers: [
+            "מספר האלקטרונים בלבד",
+            "מספר הפרוטונים",
+            "מספר הניוטרונים בלבד"
+        ],
+        correctIndex: 1,
+        explanation: "זהות היסוד נקבעת לפי מספר הפרוטונים, כלומר המספר האטומי."
+        },
+        {
+        question: "מהו מספר מסה?",
+        answers: [
+            "מספר הפרוטונים בלבד",
+            "מספר הפרוטונים ועוד מספר הניוטרונים",
+            "מספר האלקטרונים ועוד מספר הניוטרונים"
+        ],
+        correctIndex: 1,
+        explanation: "מספר מסה הוא סכום הפרוטונים והניוטרונים."
+        },
+        {
+        question: "איזוטופים של אותו יסוד נבדלים ב...",
+        answers: [
+            "מספר הפרוטונים",
+            "מספר הניוטרונים",
+            "סוג האלקטרונים"
+        ],
+        correctIndex: 1,
+        explanation: "לאיזוטופים יש אותו מספר פרוטונים, אבל מספר שונה של ניוטרונים."
+        },
+        {
+        question: "מהו המטען של אלקטרון?",
+        answers: ["חיובי", "שלילי", "ניטרלי"],
+        correctIndex: 1,
+        explanation: "לאלקטרון יש מטען שלילי."
+        },
+        {
+        question: "יון חיובי נוצר כאשר אטום...",
+        answers: [
+            "מאבד אלקטרונים",
+            "מקבל אלקטרונים",
+            "מאבד ניוטרונים"
+        ],
+        correctIndex: 0,
+        explanation: "כשאטום מאבד אלקטרונים הוא נשאר עם עודף מטען חיובי."
+        },
+        {
+        question: "לכלור יש 7 אלקטרוני ערכיות. מה הוא נוטה לעשות כדי להגיע ליון יציב?",
+        answers: [
+            "לאבד 7 אלקטרונים",
+            "לקבל אלקטרון אחד",
+            "לאבד פרוטון אחד"
+        ],
+        correctIndex: 1,
+        explanation: "לכלור חסר אלקטרון אחד לרמה חיצונית יציבה, ולכן הוא נוטה לקבל אחד."
+        }
+    ];
+
+    renderQuiz("quizMount", quizData);
+    </script>
+</body>
+</html>
