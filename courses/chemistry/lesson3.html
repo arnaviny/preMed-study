@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שיעור 3 | קשרים, מבנה ותכונות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles/main.css" />
+
+  <style>
+    .bond-type-grid,
+    .formula-builder-grid,
+    .polyatomic-grid,
+    .order-grid,
+    .properties-grid,
+    .lewis-select-grid,
+    .quick-compare-grid,
+    .geometry-grid,
+    .polarity-grid,
+    .force-grid,
+    .phase-grid,
+    .solubility-grid,
+    .conduct-grid,
+    .mini-def-grid,
+    .tetra-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .bond-type-grid,
+    .polyatomic-grid,
+    .order-grid,
+    .quick-compare-grid,
+    .geometry-grid,
+    .force-grid,
+    .mini-def-grid,
+    .tetra-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .formula-builder-grid,
+    .properties-grid,
+    .lewis-select-grid,
+    .polarity-grid,
+    .phase-grid,
+    .solubility-grid,
+    .conduct-grid {
+      grid-template-columns: 1.08fr 0.92fr;
+      align-items: start;
+    }
+
+    .bond-card,
+    .builder-card,
+    .polyatomic-card,
+    .order-card,
+    .property-card,
+    .lewis-card,
+    .compare-mini-card,
+    .continuum-output,
+    .ionic-transfer-card,
+    .geometry-card,
+    .polarity-card,
+    .force-card,
+    .phase-card,
+    .solubility-card,
+    .conduct-card,
+    .mini-def-card,
+    .tetra-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .bond-card h3,
+    .builder-card h3,
+    .polyatomic-card h3,
+    .order-card h3,
+    .property-card h3,
+    .lewis-card h3,
+    .compare-mini-card h3,
+    .continuum-output h3,
+    .ionic-transfer-card h3,
+    .geometry-card h3,
+    .polarity-card h3,
+    .force-card h3,
+    .phase-card h3,
+    .solubility-card h3,
+    .conduct-card h3,
+    .mini-def-card h3,
+    .tetra-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-family: "Fredoka", sans-serif;
+      color: var(--primary-dark);
+    }
+
+    .mini-note-list {
+      margin: 0;
+      padding-right: 18px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .bond-hero-visual {
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bond-scene {
+      width: min(100%, 320px);
+      height: 240px;
+      position: relative;
+    }
+
+    .bond-scene__atom {
+      position: absolute;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-family: "Fredoka", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      box-shadow: 0 16px 28px rgba(22, 50, 79, 0.18);
+      z-index: 2;
+    }
+
+    .bond-scene__atom--left {
+      right: 32px;
+      top: 76px;
+      background: linear-gradient(135deg, #2f6fd6, #75a9ff);
+    }
+
+    .bond-scene__atom--right {
+      left: 32px;
+      top: 76px;
+      background: linear-gradient(135deg, #f25f5c, #ff9b7f);
+    }
+
+    .bond-scene__link {
+      position: absolute;
+      top: 111px;
+      left: 92px;
+      right: 92px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(47,111,214,0.18), rgba(255,211,77,0.65), rgba(242,95,92,0.18));
+      z-index: 1;
+    }
+
+    .bond-scene__electron {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #ffd34d 72%);
+      box-shadow: 0 8px 16px rgba(243, 186, 19, 0.32);
+      top: 107px;
+      right: 144px;
+      animation: electronFloat 3s ease-in-out infinite;
+    }
+
+    .bond-scene__electron--two {
+      right: auto;
+      left: 144px;
+      animation-delay: 1.1s;
+    }
+
+    @keyframes electronFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .bond-meter {
+      position: relative;
+      direction: ltr;
+      margin-top: 12px;
+    }
+
+    .bond-meter__top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+    }
+
+    .bond-meter__track {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #7ed0ff, #ffd34d, #f25f5c);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bond-meter__thumb {
+      position: absolute;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--primary-dark);
+      box-shadow: 0 8px 18px rgba(22,50,79,0.18);
+    }
+
+    .range-wrap {
+      margin-top: 12px;
+    }
+
+    .range-wrap input[type="range"] {
+      width: 100%;
+      direction: ltr;
+    }
+
+    .continuum-pill-row,
+    .selector-row,
+    .state-row,
+    .charge-chip-row,
+    .lewis-note-row,
+    .pair-row,
+    .geometry-chip-row,
+    .polarity-chip-row,
+    .force-chip-row,
+    .solubility-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .continuum-pill,
+    .charge-chip,
+    .state-chip,
+    .lewis-note,
+    .pair-chip,
+    .geometry-chip,
+    .polarity-chip,
+    .force-chip,
+    .solubility-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: white;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .ionic-transfer-layout,
+    .conduct-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .ion-box {
+      border-radius: 22px;
+      border: 1px dashed rgba(47,111,214,0.24);
+      background: linear-gradient(135deg, rgba(47,111,214,0.06), rgba(255,255,255,0.96));
+      padding: 18px;
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ion-box__symbol {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      color: white;
+      font-family: "Fredoka", sans-serif;
+      font-size: 1.4rem;
+      box-shadow: 0 12px 24px rgba(22,50,79,0.18);
+    }
+
+    .ion-box--metal .ion-box__symbol {
+      background: linear-gradient(135deg, #2f6fd6, #7cb5ff);
+    }
+
+    .ion-box--nonmetal .ion-box__symbol {
+      background: linear-gradient(135deg, #f25f5c, #ff9f7c);
+    }
+
+    .electron-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-height: 36px;
+      margin-bottom: 12px;
+    }
+
+    .electron-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fff2ae, #ffd34d);
+      box-shadow: 0 5px 12px rgba(243,186,19,0.28);
+    }
+
+    .electron-dot.is-faded {
+      opacity: 0.22;
+    }
+
+    .transfer-result {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .builder-controls {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .field-group select {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 0 12px;
+      background: white;
+    }
+
+    .formula-result,
+    .polarity-output,
+    .geometry-output,
+    .phase-output,
+    .solubility-output,
+    .conduct-output,
+    .tetra-output {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      background: linear-gradient(135deg, rgba(47,111,214,0.06), rgba(255,255,255,0.98));
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .formula-result__big,
+    .ltr-line {
+      font-family: "Fredoka", sans-serif;
+      direction: ltr;
+      unicode-bidi: isolate;
+      color: var(--primary-dark);
+    }
+
+    .formula-result__big {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .formula-result__equation {
+      font-family: "Fredoka", sans-serif;
+      direction: ltr;
+      unicode-bidi: isolate;
+      color: var(--primary-dark);
+    }
+
+    .polyatomic-card,
+    .order-card,
+    .geometry-choice,
+    .force-choice,
+    .solubility-choice,
+    .conduct-choice {
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .polyatomic-card:hover,
+    .order-card:hover,
+    .geometry-choice:hover,
+    .force-choice:hover,
+    .solubility-choice:hover,
+    .conduct-choice:hover {
+      transform: translateY(-3px);
+      border-color: rgba(47,111,214,0.24);
+    }
+
+    .polyatomic-card.is-active,
+    .order-card.is-active,
+    .geometry-choice.is-active,
+    .force-choice.is-active,
+    .solubility-choice.is-active,
+    .conduct-choice.is-active {
+      background: linear-gradient(135deg, rgba(47,111,214,0.08), rgba(255,211,77,0.18));
+      border-color: rgba(47,111,214,0.24);
+    }
+
+    .polyatomic-card__formula,
+    .order-card__formula,
+    .compare-mini-card__formula,
+    .geometry-choice__formula,
+    .force-choice__formula,
+    .solubility-choice__formula,
+    .conduct-choice__formula {
+      margin-bottom: 10px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 1.7rem;
+      color: var(--primary-dark);
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .polyatomic-output {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,211,77,0.16), rgba(255,255,255,0.96));
+      border: 1px solid rgba(255,211,77,0.28);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .lewis-selector {
+      display: grid;
+      gap: 16px;
+    }
+
+    .selector-btn {
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: white;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--primary-dark);
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .selector-btn:hover { transform: translateY(-2px); }
+
+    .selector-btn.is-active,
+    .state-chip.is-active {
+      background: linear-gradient(135deg, rgba(47,111,214,0.12), rgba(255,211,77,0.18));
+      border-color: rgba(47,111,214,0.24);
+      color: var(--primary-dark);
+    }
+
+    .lewis-stage,
+    .geometry-stage,
+    .tetra-stage {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(47,111,214,0.05), rgba(255,255,255,0.98));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .lewis-svg,
+    .geometry-svg,
+    .tetra-svg {
+      width: 100%;
+      max-width: 430px;
+      display: block;
+    }
+
+    .lewis-atom-label,
+    .geometry-label {
+      fill: var(--primary-dark);
+      font-family: "Fredoka", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .lewis-dot {
+      fill: #ffd34d;
+      stroke: rgba(22,50,79,0.15);
+      stroke-width: 2;
+    }
+
+    .lewis-bond,
+    .geometry-bond {
+      stroke: #769acc;
+      stroke-width: 6;
+      stroke-linecap: round;
+    }
+
+    .geometry-bond--behind {
+      stroke: rgba(118,154,204,0.45);
+      stroke-dasharray: 8 8;
+    }
+
+    .geometry-atom {
+      stroke: rgba(22,50,79,0.12);
+      stroke-width: 4;
+      filter: drop-shadow(0 8px 16px rgba(22,50,79,0.12));
+    }
+
+    .geometry-atom--center { fill: #2f6fd6; }
+    .geometry-atom--outer { fill: #f25f5c; }
+    .geometry-atom--lp { fill: #ffd34d; }
+
+    .order-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 64px;
+    }
+
+    .bond-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 52px;
+    }
+
+    .bond-bars span {
+      height: 6px;
+      border-radius: 999px;
+      background: #8fb0de;
+      display: block;
+    }
+
+    .property-output {
+      background: linear-gradient(135deg, rgba(47,111,214,0.06), rgba(255,255,255,0.98));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 100%;
+    }
+
+    .bulb-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .bulb {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      position: relative;
+      background: radial-gradient(circle at 35% 35%, #ffffff, #e6edf8 70%);
+      border: 4px solid #b9c8dd;
+      box-shadow: inset 0 6px 10px rgba(255,255,255,0.7);
+    }
+
+    .bulb::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 16px;
+      border-radius: 4px 4px 8px 8px;
+      background: #93a7c5;
+    }
+
+    .bulb.is-on {
+      background: radial-gradient(circle at 40% 35%, #fffef1, #ffd34d 65%, #f3ba13 100%);
+      border-color: #f3ba13;
+      box-shadow: 0 0 0 10px rgba(255,211,77,0.12), 0 0 30px rgba(255,211,77,0.55);
+    }
+
+    .conduct-path {
+      flex: 1;
+      min-width: 140px;
+      height: 12px;
+      border-radius: 999px;
+      background: #dce6f4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .conduct-path__flow {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #7ed0ff, #2f6fd6);
+      transition: width 0.25s ease;
+    }
+
+    .conduct-path__flow.is-on {
+      width: 100%;
+    }
+
+    .property-facts {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .property-fact {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .force-strength {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .force-strength__bar {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: #e6eef8;
+      overflow: hidden;
+    }
+
+    .force-strength__fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #7ed0ff, #2f6fd6);
+    }
+
+    .tetra-stage {
+      min-height: 320px;
+    }
+
+    .tetra-help {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 980px) {
+      .formula-builder-grid,
+      .properties-grid,
+      .lewis-select-grid,
+      .ionic-transfer-layout,
+      .conduct-layout,
+      .polarity-grid,
+      .phase-grid,
+      .solubility-grid,
+      .conduct-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bond-hero-visual {
+        min-height: 240px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .bond-scene {
+        width: 260px;
+        height: 200px;
+      }
+
+      .bond-scene__atom {
+        width: 64px;
+        height: 64px;
+        font-size: 1.1rem;
+      }
+
+      .bond-scene__atom--left {
+        right: 18px;
+        top: 66px;
+      }
+
+      .bond-scene__atom--right {
+        left: 18px;
+        top: 66px;
+      }
+
+      .bond-scene__link {
+        top: 96px;
+        left: 74px;
+        right: 74px;
+      }
+
+      .bond-scene__electron {
+        top: 92px;
+        right: 114px;
+      }
+
+      .bond-scene__electron--two {
+        left: 114px;
+        right: auto;
+      }
+
+      .bond-meter__top {
+        font-size: 0.82rem;
+      }
+    }
+  </style>
+</head>
+<body class="site-body">
+  <div class="page-shell">
+    <header class="lesson-hero">
+      <a class="back-link" href="../../index.html">← חזרה לדף הבית</a>
+
+      <div class="lesson-hero__content">
+        <span class="lesson-hero__tag">מבואות הכימיה</span>
+        <h1>שיעור 3 — קשרים, מבנה ותכונות</h1>
+        <p>
+          למה אטומים בכלל “נדבקים”, איך יונים ומולקולות נוצרים, איך חוזים מבנה תלת־ממדי,
+          מתי מולקולה קוטבית, אילו כוחות פועלים בין מולקולות, ומה כל זה מסביר על המסה, רתיחה, התכה, מסיסות והולכה.
+        </p>
+      </div>
+
+      <div class="lesson-hero__visual bond-hero-visual">
+        <div class="bond-scene">
+          <div class="orb orb--1"></div>
+          <div class="orb orb--2"></div>
+          <div class="orb orb--3"></div>
+          <div class="bond-scene__atom bond-scene__atom--left">Na</div>
+          <div class="bond-scene__link"></div>
+          <div class="bond-scene__electron"></div>
+          <div class="bond-scene__electron bond-scene__electron--two"></div>
+          <div class="bond-scene__atom bond-scene__atom--right">Cl</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="lesson-layout">
+      <aside class="lesson-sidebar">
+        <div class="lesson-progress-card">
+          <div class="lesson-progress-card__top">
+            <h3>איפה אני בשיעור?</h3>
+            <span id="lessonProgressPercent" class="lesson-progress-card__percent">0%</span>
+          </div>
+
+          <div class="lesson-progress-bar">
+            <div id="lessonProgressBarFill" class="lesson-progress-bar__fill"></div>
+          </div>
+
+          <nav class="lesson-progress-nav" aria-label="ניווט בשיעור">
+            <a href="#section-types" class="lesson-progress-link is-active">סוגי קשרים</a>
+            <a href="#section-continuum" class="lesson-progress-link">הרצף קוולנטי–יוני</a>
+            <a href="#section-ionic" class="lesson-progress-link">קשר יוני וסריג</a>
+            <a href="#section-formula" class="lesson-progress-link">נוסחה אמפירית</a>
+            <a href="#section-polyatomic" class="lesson-progress-link">יונים פוליאטומיים</a>
+            <a href="#section-lewis" class="lesson-progress-link">נוסחאות לואיס</a>
+            <a href="#section-geometry" class="lesson-progress-link">מבנים תלת־ממדיים</a>
+            <a href="#section-polarity" class="lesson-progress-link">פולריות</a>
+            <a href="#section-tetra" class="lesson-progress-link">מולקולות טטראדרליות</a>
+            <a href="#section-forces" class="lesson-progress-link">כוחות בין־מולקולריים</a>
+            <a href="#section-phase" class="lesson-progress-link">התכה, רתיחה והמסה</a>
+            <a href="#section-solubility" class="lesson-progress-link">מסיסות במים ובשמן</a>
+            <a href="#section-properties" class="lesson-progress-link">הולכה ותכונות</a>
+            <a href="#section-quiz" class="lesson-progress-link">קווייז</a>
+          </nav>
+        </div>
+
+        <div class="side-card side-card--accent">
+          <h3>עיקרון מפתח</h3>
+          <p>
+            סוג הקשר קובע איך האלקטרונים מתנהגים.  
+            המבנה המרחבי קובע אם הדיפולים מתבטלים או לא.  
+            והכוחות בין המולקולות קובעים תכונות כמו מסיסות, רתיחה והמסה.
+          </p>
+        </div>
+      </aside>
+
+      <section class="lesson-main">
+        <section id="section-types" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מפת נושא</span>
+            <h2>סוגי קשרים כימיים</h2>
+          </div>
+
+          <p class="lead">
+            קשר כימי הוא משיכה חשמלית שמחזיקה חלקיקים יחד. לפעמים מדובר באטומים,
+            לפעמים ביונים, ולפעמים במולקולות שלמות שנמשכות זו לזו.
+          </p>
+
+          <div class="bond-type-grid">
+            <article class="bond-card">
+              <span class="pill">קוולנטי</span>
+              <h3>שיתוף אלקטרונים</h3>
+              <ul class="mini-note-list">
+                <li>נפוץ בין אל־מתכות</li>
+                <li>יכול להיות לא קוטבי או קוטבי</li>
+                <li>יוצר מולקולות או רשתות אטומיות</li>
+              </ul>
+            </article>
+
+            <article class="bond-card">
+              <span class="pill">יוני</span>
+              <h3>משיכה בין יונים</h3>
+              <ul class="mini-note-list">
+                <li>מתכת מוסרת אלקטרונים</li>
+                <li>אל־מתכת קולטת אלקטרונים</li>
+                <li>מתקבל סריג יוני ניטרלי</li>
+              </ul>
+            </article>
+
+            <article class="bond-card">
+              <span class="pill">מתכתי</span>
+              <h3>ים אלקטרונים</h3>
+              <ul class="mini-note-list">
+                <li>גרעיני מתכת חיוביים בסריג</li>
+                <li>אלקטרונים ניידים ביניהם</li>
+                <li>מסביר מוליכות וגמישות</li>
+              </ul>
+            </article>
+
+            <article class="bond-card">
+              <span class="pill">בין־מולקולרי</span>
+              <h3>משיכה בין מולקולות</h3>
+              <ul class="mini-note-list">
+                <li>קשרי מימן</li>
+                <li>דיפול־דיפול</li>
+                <li>כוחות ואן־דר־ואלס</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="section-continuum" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">רעיון מרכזי</span>
+            <h2>הרצף מקשר קוולנטי לקשר יוני</h2>
+          </div>
+
+          <p class="lead">
+            לא כל קשר הוא “או־או”. ככל שהפרש האלקטרושליליות גדל, השיתוף נעשה פחות שוויוני,
+            והקשר נע לעבר אופי יוני יותר.
+          </p>
+
+          <div class="interactive-panel">
+            <div class="range-wrap">
+              <label for="bondContinuumRange"><strong>גרור לפי הפרש אלקטרושליליות</strong></label>
+              <input id="bondContinuumRange" type="range" min="0" max="25" value="0" />
+            </div>
+
+            <div class="bond-meter">
+              <div class="bond-meter__top">
+                <span>קוולנטי טהור</span>
+                <span>קוטבי</span>
+                <span>יוני</span>
+              </div>
+              <div class="bond-meter__track">
+                <div id="bondContinuumThumb" class="bond-meter__thumb"></div>
+              </div>
+            </div>
+
+            <div class="continuum-pill-row" style="margin-top: 14px;">
+              <span class="continuum-pill">Cl—Cl</span>
+              <span class="continuum-pill">H—Cl</span>
+              <span class="continuum-pill">Na⁺Cl⁻</span>
+            </div>
+
+            <div id="bondContinuumOutput" class="continuum-output" style="margin-top: 16px;"></div>
+          </div>
+        </section>
+
+        <section id="section-ionic" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">דוגמה קלאסית</span>
+            <h2>קשר יוני: מעבר אלקטרון ובניית סריג</h2>
+          </div>
+
+          <p class="lead">
+            ב־NaCl, נתרן מוסר אלקטרון וכלור קולט אותו. כך מתקבלים יונים בעלי מטען הפוך,
+            והמשיכה ביניהם יוצרת סריג גבישי תלת־ממדי.
+          </p>
+
+          <div class="ionic-transfer-card">
+            <div class="ionic-transfer-layout">
+              <div class="ion-box ion-box--metal">
+                <div class="ion-box__symbol">Na</div>
+                <div id="naElectrons" class="electron-dots"></div>
+                <p class="lead" style="font-size:1rem; margin-bottom: 0;">
+                  נתרן מתחיל כאטום ניטרלי עם אלקטרון ערכיות אחד.
+                </p>
+              </div>
+
+              <div class="ion-box ion-box--nonmetal">
+                <div class="ion-box__symbol">Cl</div>
+                <div id="clElectrons" class="electron-dots"></div>
+                <p class="lead" style="font-size:1rem; margin-bottom: 0;">
+                  כלור כמעט מלא — חסר לו אלקטרון אחד כדי להשלים שמינייה.
+                </p>
+              </div>
+            </div>
+
+            <div class="selector-row" style="margin-top:16px; justify-content:center;">
+              <button id="transferElectronBtn" class="btn btn--primary">העבר אלקטרון</button>
+              <button id="resetTransferBtn" class="btn btn--ghost">איפוס</button>
+            </div>
+
+            <div id="ionicTransferResult" class="transfer-result">
+              לחץ על הכפתור כדי לראות איך אטום ניטרלי הופך ליונים Na⁺ ו־Cl⁻.
+            </div>
+          </div>
+        </section>
+
+        <section id="section-formula" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">תרגול בנייה</span>
+            <h2>כתיבת נוסחה אמפירית לתרכובת יונית</h2>
+          </div>
+
+          <p class="lead">
+            הנוסחה האמפירית מציגה את היחס השלם הקטן ביותר בין יונים בסריג.
+            המטרה תמיד זהה: סך המטענים החיוביים חייב להשתוות לסך המטענים השליליים.
+          </p>
+
+          <div class="formula-builder-grid">
+            <div class="builder-card">
+              <div class="builder-controls">
+                <div class="field-group">
+                  <label for="cationSelect">בחר קטיון</label>
+                  <select id="cationSelect">
+                    <option value="Na">Na⁺</option>
+                    <option value="Li">Li⁺</option>
+                    <option value="Mg">Mg²⁺</option>
+                    <option value="Al">Al³⁺</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="anionSelect">בחר אניון</label>
+                  <select id="anionSelect">
+                    <option value="Cl">Cl⁻</option>
+                    <option value="O">O²⁻</option>
+                    <option value="S">S²⁻</option>
+                    <option value="N">N³⁻</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="formulaBuilderOutput" class="formula-result"></div>
+          </div>
+        </section>
+
+        <section id="section-polyatomic" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">עוד אבן בניין</span>
+            <h2>יונים פוליאטומיים</h2>
+          </div>
+
+          <p class="lead">
+            יון פוליאטומי הוא קבוצה של אטומים הקשורים קוולנטית, אבל כל הקבוצה יחד נושאת מטען.
+            מבחינתנו היא מתנהגת כיחידה אחת.
+          </p>
+
+          <div id="polyatomicGrid" class="polyatomic-grid"></div>
+          <div id="polyatomicOutput" class="polyatomic-output">בחר יון כדי לראות הסבר קצר ולמה הוא נחשב חלקיק אחד.</div>
+        </section>
+
+        <section id="section-lewis" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">ייצוג</span>
+            <h2>נוסחאות לואיס — איך רואים אלקטרוני ערכיות</h2>
+          </div>
+
+          <p class="lead">
+            נוסחת לואיס מסמנת רק את אלקטרוני הערכיות. בעזרתה אפשר לראות מי יוצר קשר,
+            איפה יש זוגות לא־קושרים, וכמה אזורי אלקטרונים יש סביב האטום המרכזי.
+          </p>
+
+          <div class="lewis-select-grid">
+            <div class="lewis-card lewis-selector">
+              <div class="selector-row" id="lewisButtons">
+                <button class="selector-btn is-active" data-lewis="H2">H₂</button>
+                <button class="selector-btn" data-lewis="O2">O₂</button>
+                <button class="selector-btn" data-lewis="N2">N₂</button>
+                <button class="selector-btn" data-lewis="H2O">H₂O</button>
+                <button class="selector-btn" data-lewis="CO2">CO₂</button>
+                <button class="selector-btn" data-lewis="NH3">NH₃</button>
+                <button class="selector-btn" data-lewis="CH4">CH₄</button>
+              </div>
+
+              <div id="lewisTextOutput" class="memory-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div class="lewis-stage">
+              <div id="lewisSvgMount"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-geometry" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">ממרחב לואיס למרחב אמיתי</span>
+            <h2>מבנים תלת־ממדיים של מולקולות</h2>
+          </div>
+
+          <p class="lead">
+            כדי למצוא מבנה תלת־ממדי, מסתכלים על האטום המרכזי ושואלים:
+            כמה אזורי אלקטרונים יש סביבו? קשרים וזוגות לא־קושרים דוחים זה את זה,
+            ולכן הם מסתדרים במרחב כך שהדחייה תהיה קטנה ככל האפשר.
+          </p>
+
+          <div class="polarity-grid">
+            <div class="geometry-card">
+              <div class="selector-row" id="geometryButtons">
+                <button class="selector-btn is-active" data-geometry="CO2">CO₂</button>
+                <button class="selector-btn" data-geometry="H2O">H₂O</button>
+                <button class="selector-btn" data-geometry="BF3">BF₃</button>
+                <button class="selector-btn" data-geometry="NH3">NH₃</button>
+                <button class="selector-btn" data-geometry="CH4">CH₄</button>
+              </div>
+              <div id="geometryOutput" class="geometry-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div class="geometry-stage">
+              <div id="geometrySvgMount"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-polarity" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">הבדל קריטי</span>
+            <h2>פולריות של קשר מול פולריות של מולקולה</h2>
+          </div>
+
+          <p class="lead">
+            קשר יכול להיות קוטבי, אבל עדיין המולקולה כולה לא תהיה קוטבית אם המבנה סימטרי
+            והדיפולים מתבטלים. לכן צריך לבדוק גם את הקשרים וגם את הצורה.
+          </p>
+
+          <div class="polarity-grid">
+            <div class="polarity-card">
+              <div class="selector-row" id="polarityButtons">
+                <button class="selector-btn is-active" data-polarity="HCl">HCl</button>
+                <button class="selector-btn" data-polarity="H2O">H₂O</button>
+                <button class="selector-btn" data-polarity="CO2">CO₂</button>
+                <button class="selector-btn" data-polarity="CH4">CH₄</button>
+                <button class="selector-btn" data-polarity="NH3">NH₃</button>
+              </div>
+              <div id="polarityOutput" class="polarity-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div class="polarity-card">
+              <h3>כלל אצבע</h3>
+              <div class="property-facts">
+                <div class="property-fact"><strong>קשר קוטבי</strong> = הפרש אלקטרושליליות בתוך קשר.</div>
+                <div class="property-fact"><strong>מולקולה קוטבית</strong> = סכום הדיפולים אינו מתבטל.</div>
+                <div class="property-fact">מולקולה סימטרית יכולה להיות לא קוטבית גם אם כל קשר בה קוטבי.</div>
+                <div class="property-fact">למשל CO₂: קשרים קוטביים, אבל מולקולה לא קוטבית.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-tetra" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מקרה חשוב</span>
+            <h2>מולקולות טטראדרליות — ומה זה בכלל?</h2>
+          </div>
+
+          <p class="lead">
+            טטראדר הוא מבנה שבו לאטום המרכזי יש ארבעה אזורי קשר, והם פונים לארבע פינות במרחב.
+            אם כל הזרועות זהות — הדיפולים נוטים להתבטל. אם מחליפים חלק מהאטומים, הסימטריה נשברת.
+          </p>
+
+          <div class="tetra-grid">
+            <div class="tetra-card">
+              <div class="selector-row" id="tetraButtons">
+                <button class="selector-btn is-active" data-tetra="CH4">CH₄</button>
+                <button class="selector-btn" data-tetra="CH3F">CH₃F</button>
+                <button class="selector-btn" data-tetra="CH2F2">CH₂F₂</button>
+                <button class="selector-btn" data-tetra="CHF3">CHF₃</button>
+                <button class="selector-btn" data-tetra="CF4">CF₄</button>
+              </div>
+              <div id="tetraOutput" class="tetra-output" style="margin-top: 14px;"></div>
+            </div>
+
+            <div class="tetra-stage">
+              <div id="tetraSvgMount"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-forces" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">בין מולקולות</span>
+            <h2>כוחות בין־מולקולריים</h2>
+          </div>
+
+          <p class="lead">
+            גם אחרי שמולקולה נבנתה בקשרים קוולנטיים, עדיין קיימים כוחות שפועלים בין מולקולה למולקולה.
+            הכוחות האלה חלשים הרבה יותר מקשר קוולנטי או יוני, אבל הם משפיעים מאוד על תכונות החומר.
+          </p>
+
+          <div class="force-grid" id="forceGrid"></div>
+          <div id="forceOutput" class="memory-output" style="margin-top: 16px;"></div>
+        </section>
+
+        <section id="section-phase" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מונחי יסוד</span>
+            <h2>התכה, רתיחה והמסה</h2>
+          </div>
+
+          <div class="mini-def-grid">
+            <article class="mini-def-card">
+              <h3>התכה</h3>
+              <p class="lead">מעבר ממוצק לנוזל.</p>
+            </article>
+            <article class="mini-def-card">
+              <h3>רתיחה</h3>
+              <p class="lead">מעבר מנוזל לגז.</p>
+            </article>
+            <article class="mini-def-card">
+              <h3>המסה</h3>
+              <p class="lead">פיזור של מומס בתוך ממס ליצירת תמיסה.</p>
+            </article>
+            <article class="mini-def-card">
+              <h3>ממס / מומס / תמיסה</h3>
+              <p class="lead">הממס הוא הסביבה, המומס הוא החומר שנכנס אליה, והכול יחד נקרא תמיסה.</p>
+            </article>
+          </div>
+
+          <div class="phase-grid" style="margin-top: 18px;">
+            <div class="phase-card">
+              <div class="selector-row" id="phaseButtons">
+                <button class="selector-btn is-active" data-phase="melting">התכה</button>
+                <button class="selector-btn" data-phase="boiling">רתיחה</button>
+                <button class="selector-btn" data-phase="dissolving">המסה</button>
+              </div>
+            </div>
+
+            <div id="phaseOutput" class="phase-output"></div>
+          </div>
+        </section>
+
+        <section id="section-solubility" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">למה משהו נמס?</span>
+            <h2>מסיסות במים ובשמן</h2>
+          </div>
+
+          <p class="lead">
+            מים הם ממס קוטבי. שמן הוא סביבה לא קוטבית. לכן כלל האצבע הוא:
+            <strong>דומה בדומה נמס</strong>. בנוסף, קבוצת <span class="ltr-line">OH</span> יכולה לעזור למסיסות במים.
+          </p>
+
+          <div class="solubility-grid">
+            <div class="solubility-card">
+              <div class="selector-row" id="solubilityButtons">
+                <button class="selector-btn is-active" data-solubility="NaCl">NaCl</button>
+                <button class="selector-btn" data-solubility="Sugar">סוכר</button>
+                <button class="selector-btn" data-solubility="Oil">שמן</button>
+                <button class="selector-btn" data-solubility="Ethanol">אתנול</button>
+                <button class="selector-btn" data-solubility="Hexane">הקסאן</button>
+              </div>
+            </div>
+
+            <div id="solubilityOutput" class="solubility-output"></div>
+          </div>
+        </section>
+
+        <section id="section-properties" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">מה זה מסביר?</span>
+            <h2>הולכה חשמלית בתמיסה מימית ותכונות חומר</h2>
+          </div>
+
+          <p class="lead">
+            מוליכות בתמיסה מימית לא תלויה רק בזה שחומר “נמס במים”, אלא בשאלה
+            האם מתקבלים <strong>יונים חופשיים</strong> שיכולים לנוע.
+          </p>
+
+          <div class="properties-grid">
+            <div class="property-card">
+              <div class="field-group">
+                <label for="materialSelect">בחר חומר</label>
+                <select id="materialSelect">
+                  <option value="Al">Al</option>
+                  <option value="NaCl">NaCl</option>
+                  <option value="SiO2">SiO₂</option>
+                  <option value="H2O">H₂O</option>
+                  <option value="C12H22O11">סוכר</option>
+                  <option value="HClaq">HCl(aq)</option>
+                  <option value="Oil">שמן</option>
+                </select>
+              </div>
+
+              <div class="state-row" id="stateButtons" style="margin-top: 14px;">
+                <button class="state-chip is-active" type="button" data-state="solid">מוצק</button>
+                <button class="state-chip" type="button" data-state="liquid">נוזל</button>
+                <button class="state-chip" type="button" data-state="solution">תמיסה מימית</button>
+              </div>
+
+              <div class="quick-compare-grid" style="margin-top: 16px;">
+                <article class="compare-mini-card">
+                  <h3>יוני</h3>
+                  <div class="compare-mini-card__formula">NaCl</div>
+                  <p>מוליך רק כשהיונים חופשיים לנוע.</p>
+                </article>
+                <article class="compare-mini-card">
+                  <h3>מולקולרי</h3>
+                  <div class="compare-mini-card__formula">C₁₂H₂₂O₁₁</div>
+                  <p>יכול להתמוסס בלי ליצור יונים.</p>
+                </article>
+              </div>
+            </div>
+
+            <div id="propertyOutput" class="property-output"></div>
+          </div>
+        </section>
+
+        <section id="section-quiz" class="content-card">
+          <div class="section__heading section__heading--tight">
+            <span class="section__eyebrow">בדיקת הבנה</span>
+            <h2>מיני־קווייז של שיעור 3</h2>
+          </div>
+
+          <div id="quizMount"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { renderQuiz } from "../../components/quiz.js";
+
+    const trackedSections = [
+      "section-types",
+      "section-continuum",
+      "section-ionic",
+      "section-formula",
+      "section-polyatomic",
+      "section-lewis",
+      "section-geometry",
+      "section-polarity",
+      "section-tetra",
+      "section-forces",
+      "section-phase",
+      "section-solubility",
+      "section-properties",
+      "section-quiz"
+    ];
+
+    const progressLinks = [...document.querySelectorAll(".lesson-progress-link")];
+    const progressFill = document.getElementById("lessonProgressBarFill");
+    const progressPercent = document.getElementById("lessonProgressPercent");
+
+    function updateLessonProgress() {
+      let activeIndex = 0;
+
+      trackedSections.forEach((id, index) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.35) {
+          activeIndex = index;
+        }
+      });
+
+      progressLinks.forEach((link, index) => {
+        link.classList.toggle("is-active", index === activeIndex);
+      });
+
+      const percent = Math.round(((activeIndex + 1) / trackedSections.length) * 100);
+      progressFill.style.width = `${percent}%`;
+      progressPercent.textContent = `${percent}%`;
+    }
+
+    window.addEventListener("scroll", updateLessonProgress, { passive: true });
+    window.addEventListener("load", updateLessonProgress);
+    updateLessonProgress();
+
+    function gcd(a, b) {
+      while (b !== 0) {
+        const t = b;
+        b = a % b;
+        a = t;
+      }
+      return a;
+    }
+
+    function lcm(a, b) {
+      return (a * b) / gcd(a, b);
+    }
+
+    // continuum
+    const bondContinuumData = [
+      {
+        max: 3,
+        type: "קשר קוולנטי טהור",
+        example: "Cl–Cl",
+        diff: "0.0",
+        text: "שני אטומים זהים מושכים את זוג האלקטרונים באותה מידה. אין מטענים חלקיים.",
+        chips: ["שיתוף שווה", "ללא קוטביות", "אטומים זהים"]
+      },
+      {
+        max: 17,
+        type: "קשר קוולנטי קוטבי",
+        example: "H–Cl",
+        diff: "0.4–1.7",
+        text: "האלקטרונים עדיין משותפים, אבל לא באופן שווה. האטום היותר אלקטרושלילי מושך יותר.",
+        chips: ["δ+ / δ-", "שיתוף לא שווה", "קוטביות"]
+      },
+      {
+        max: 25,
+        type: "קשר יוני",
+        example: "Na⁺Cl⁻",
+        diff: "> 1.7",
+        text: "המשיכה של האטום האחד חזקה כל כך עד שנוח יותר לחשוב על העברת אלקטרון ועל יצירת יונים נפרדים.",
+        chips: ["העברת אלקטרון", "יונים", "סריג גבישי"]
+      }
+    ];
+
+    const bondContinuumRange = document.getElementById("bondContinuumRange");
+    const bondContinuumThumb = document.getElementById("bondContinuumThumb");
+    const bondContinuumOutput = document.getElementById("bondContinuumOutput");
+
+    function updateContinuum() {
+      const value = Number(bondContinuumRange.value);
+      const active =
+        bondContinuumData.find(item => value <= item.max) ||
+        bondContinuumData[bondContinuumData.length - 1];
+
+      const percent = (value / 25) * 100;
+      bondContinuumThumb.style.left = `${percent}%`;
+
+      bondContinuumOutput.innerHTML = `
+        <h3>${active.type}</h3>
+        <p><strong>דוגמה:</strong> <span class="ltr-line">${active.example}</span></p>
+        <p><strong>הפרש אלקטרושליליות אופייני:</strong> ${active.diff}</p>
+        <p>${active.text}</p>
+        <div class="continuum-pill-row">${active.chips.map(chip => `<span class="continuum-pill">${chip}</span>`).join("")}</div>
+      `;
+    }
+
+    bondContinuumRange.addEventListener("input", updateContinuum);
+    updateContinuum();
+
+    // ionic transfer
+    const naElectrons = document.getElementById("naElectrons");
+    const clElectrons = document.getElementById("clElectrons");
+    const transferElectronBtn = document.getElementById("transferElectronBtn");
+    const resetTransferBtn = document.getElementById("resetTransferBtn");
+    const ionicTransferResult = document.getElementById("ionicTransferResult");
+    let ionicTransferred = false;
+
+    function renderElectronDots(mount, count, faded = 0) {
+      mount.innerHTML = Array.from({ length: count }, (_, i) => {
+        const fadedClass = i >= count - faded ? "is-faded" : "";
+        return `<span class="electron-dot ${fadedClass}"></span>`;
+      }).join("");
+    }
+
+    function renderIonicTransfer() {
+      if (!ionicTransferred) {
+        renderElectronDots(naElectrons, 1, 0);
+        renderElectronDots(clElectrons, 7, 0);
+        ionicTransferResult.innerHTML = `
+          <strong>לפני המעבר:</strong><br>
+          נתרן ניטרלי עם אלקטרון ערכיות אחד, וכלור ניטרלי עם 7 אלקטרוני ערכיות.<br>
+          לכלור חסר אלקטרון אחד כדי להשלים שמינייה.
+        `;
+        return;
+      }
+
+      renderElectronDots(naElectrons, 1, 1);
+      renderElectronDots(clElectrons, 8, 0);
+      ionicTransferResult.innerHTML = `
+        <strong>אחרי המעבר:</strong><br>
+        נתרן איבד אלקטרון והפך ל־<span class="ltr-line">Na⁺</span>.<br>
+        כלור קיבל אלקטרון והפך ל־<span class="ltr-line">Cl⁻</span>.<br>
+        עכשיו יש ביניהם משיכה אלקטרוסטטית, ובמצב החומר האמיתי מתקבל סריג יוני שחוזר על עצמו בשלושה ממדים.
+      `;
+    }
+
+    transferElectronBtn.addEventListener("click", () => {
+      ionicTransferred = true;
+      renderIonicTransfer();
+    });
+
+    resetTransferBtn.addEventListener("click", () => {
+      ionicTransferred = false;
+      renderIonicTransfer();
+    });
+
+    renderIonicTransfer();
+
+    // empirical formula builder
+    const ions = {
+      Na: { symbol: "Na", charge: 1, name: "נתרן" },
+      Li: { symbol: "Li", charge: 1, name: "ליתיום" },
+      Mg: { symbol: "Mg", charge: 2, name: "מגנזיום" },
+      Al: { symbol: "Al", charge: 3, name: "אלומיניום" },
+      Cl: { symbol: "Cl", charge: -1, name: "כלוריד" },
+      O: { symbol: "O", charge: -2, name: "חמצן" },
+      S: { symbol: "S", charge: -2, name: "גופריד" },
+      N: { symbol: "N", charge: -3, name: "ניטריד" }
+    };
+
+    const cationSelect = document.getElementById("cationSelect");
+    const anionSelect = document.getElementById("anionSelect");
+    const formulaBuilderOutput = document.getElementById("formulaBuilderOutput");
+
+    function buildIonicFormula(cationKey, anionKey) {
+      const cation = ions[cationKey];
+      const anion = ions[anionKey];
+      const cCharge = Math.abs(cation.charge);
+      const aCharge = Math.abs(anion.charge);
+      const common = lcm(cCharge, aCharge);
+      const cCount = common / cCharge;
+      const aCount = common / aCharge;
+      const cSub = cCount > 1 ? `<sub>${cCount}</sub>` : "";
+      const aSub = aCount > 1 ? `<sub>${aCount}</sub>` : "";
+      const formula = `${cation.symbol}${cSub}${anion.symbol}${aSub}`;
+
+      formulaBuilderOutput.innerHTML = `
+        <div class="formula-result__big">${formula}</div>
+        <p><strong>שם:</strong> ${cation.name} ${anion.name}</p>
+        <div class="charge-chip-row">
+          <span class="charge-chip">מטען הקטיון: +${cCharge}</span>
+          <span class="charge-chip">מטען האניון: -${aCharge}</span>
+        </div>
+        <p>
+          כדי לקבל מטען כולל אפס צריך <strong>${cCount}</strong> קטיונים ו־<strong>${aCount}</strong> אניונים.
+        </p>
+        <div class="formula-result__equation">(${cCount} × +${cCharge}) + (${aCount} × -${aCharge}) = 0</div>
+        <p>הנוסחה האמפירית תמיד מציגה את <strong>היחס השלם הקטן ביותר</strong>.</p>
+      `;
+    }
+
+    cationSelect.addEventListener("change", () => buildIonicFormula(cationSelect.value, anionSelect.value));
+    anionSelect.addEventListener("change", () => buildIonicFormula(cationSelect.value, anionSelect.value));
+    buildIonicFormula(cationSelect.value, anionSelect.value);
+
+    // polyatomic ions
+    const polyatomicIons = [
+      { key: "NO3", formula: "NO<sub>3</sub><sup>−</sup>", name: "חנקתי", text: "אטום חנקן אחד קשור לשלושה אטומי חמצן, וכל היחידה יחד נושאת מטען 1−." },
+      { key: "SO4", formula: "SO<sub>4</sub><sup>2−</sup>", name: "גופרתי", text: "אטום גופרית אחד וארבעה אטומי חמצן. היחידה מתנהגת כאניון 2−." },
+      { key: "OH", formula: "OH<sup>−</sup>", name: "הידרוקסידי", text: "חמצן ומימן קשורים קוולנטית, אבל יחד הם נושאים מטען 1−. קבוצת OH גם משפיעה על מסיסות בהרבה מולקולות אורגניות." },
+      { key: "NH4", formula: "NH<sub>4</sub><sup>+</sup>", name: "אמוניום", text: "יון פוליאטומי חיובי: חנקן וארבעה מימנים כיחידה אחת עם מטען 1+." },
+      { key: "PO4", formula: "PO<sub>4</sub><sup>3−</sup>", name: "זרחתי", text: "אטום זרחן אחד וארבעה חמצנים, מטען כולל 3−." },
+      { key: "CO3", formula: "CO<sub>3</sub><sup>2−</sup>", name: "פחמתי", text: "אטום פחמן אחד ושלושה חמצנים, מטען כולל 2−." }
+    ];
+
+    const polyatomicGrid = document.getElementById("polyatomicGrid");
+    const polyatomicOutput = document.getElementById("polyatomicOutput");
+
+    polyatomicGrid.innerHTML = polyatomicIons.map(item => `
+      <button class="polyatomic-card" type="button" data-key="${item.key}">
+        <div class="polyatomic-card__formula">${item.formula}</div>
+        <h3>${item.name}</h3>
+        <p>לחץ לגילוי</p>
+      </button>
+    `).join("");
+
+    function activatePolyatomic(key) {
+      const item = polyatomicIons.find(ion => ion.key === key);
+      polyatomicOutput.innerHTML = `
+        <strong>${item.name}</strong><br>
+        <span class="ltr-line">${item.formula}</span><br>
+        ${item.text}<br>
+        למרות שיש בפנים כמה אטומים וקשרים קוולנטיים, בתרכובות יוניות הוא נכנס כחלקיק אחד עם מטען קבוע.
+      `;
+
+      document.querySelectorAll(".polyatomic-card").forEach(card => {
+        card.classList.toggle("is-active", card.dataset.key === key);
+      });
+    }
+
+    polyatomicGrid.addEventListener("click", (event) => {
+      const card = event.target.closest(".polyatomic-card");
+      if (!card) return;
+      activatePolyatomic(card.dataset.key);
+    });
+
+    activatePolyatomic("NO3");
+
+    // Lewis data
+    const lewisData = {
+      H2: {
+        text: "לכל מימן יש אלקטרון אחד. שני האטומים משתפים זוג אלקטרונים אחד ולכן מתקבל קשר יחיד.",
+        notes: ["קשר יחיד", "ללא זוגות לא־קושרים", "דו־אטומי"],
+        svg: `
+          <svg viewBox="0 0 320 180" class="lewis-svg" aria-label="Lewis H2">
+            <text x="90" y="95" class="lewis-atom-label">H</text>
+            <text x="210" y="95" class="lewis-atom-label">H</text>
+            <circle cx="152" cy="84" r="7" class="lewis-dot"></circle>
+            <circle cx="168" cy="84" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      O2: {
+        text: "לכל חמצן יש 6 אלקטרוני ערכיות. שני זוגות משותפים יוצרים קשר כפול, ולכל אטום נשארים שני זוגות לא־קושרים.",
+        notes: ["קשר כפול", "2 זוגות לא־קושרים לכל O", "O=O"],
+        svg: `
+          <svg viewBox="0 0 360 220" class="lewis-svg" aria-label="Lewis O2">
+            <text x="92" y="116" class="lewis-atom-label">O</text>
+            <text x="238" y="116" class="lewis-atom-label">O</text>
+            <line x1="138" y1="102" x2="182" y2="102" class="lewis-bond"></line>
+            <line x1="138" y1="118" x2="182" y2="118" class="lewis-bond"></line>
+            <circle cx="68" cy="86" r="7" class="lewis-dot"></circle>
+            <circle cx="68" cy="146" r="7" class="lewis-dot"></circle>
+            <circle cx="112" cy="70" r="7" class="lewis-dot"></circle>
+            <circle cx="112" cy="162" r="7" class="lewis-dot"></circle>
+            <circle cx="258" cy="70" r="7" class="lewis-dot"></circle>
+            <circle cx="258" cy="162" r="7" class="lewis-dot"></circle>
+            <circle cx="302" cy="86" r="7" class="lewis-dot"></circle>
+            <circle cx="302" cy="146" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      N2: {
+        text: "לכל חנקן יש 5 אלקטרוני ערכיות. שלושה זוגות משותפים יוצרים קשר משולש, ולכל חנקן נשאר זוג לא־קושר אחד.",
+        notes: ["קשר משולש", "זוג לא־קושר אחד לכל N", "N≡N"],
+        svg: `
+          <svg viewBox="0 0 360 220" class="lewis-svg" aria-label="Lewis N2">
+            <text x="92" y="116" class="lewis-atom-label">N</text>
+            <text x="238" y="116" class="lewis-atom-label">N</text>
+            <line x1="138" y1="94" x2="182" y2="94" class="lewis-bond"></line>
+            <line x1="138" y1="110" x2="182" y2="110" class="lewis-bond"></line>
+            <line x1="138" y1="126" x2="182" y2="126" class="lewis-bond"></line>
+            <circle cx="68" cy="110" r="7" class="lewis-dot"></circle>
+            <circle cx="302" cy="110" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      H2O: {
+        text: "חמצן הוא האטום המרכזי. הוא יוצר שני קשרים יחידים עם מימנים, ועליו נשארים שני זוגות לא־קושרים. סה״כ 4 אזורי אלקטרונים סביב O.",
+        notes: ["O מרכזי", "2 קשרים יחידים", "2 זוגות לא־קושרים על O", "4 אזורי אלקטרונים"],
+        svg: `
+          <svg viewBox="0 0 360 260" class="lewis-svg" aria-label="Lewis H2O">
+            <text x="172" y="140" class="lewis-atom-label">O</text>
+            <text x="72" y="208" class="lewis-atom-label">H</text>
+            <text x="272" y="208" class="lewis-atom-label">H</text>
+            <line x1="150" y1="146" x2="102" y2="184" class="lewis-bond"></line>
+            <line x1="194" y1="146" x2="242" y2="184" class="lewis-bond"></line>
+            <circle cx="156" cy="86" r="7" class="lewis-dot"></circle>
+            <circle cx="188" cy="86" r="7" class="lewis-dot"></circle>
+            <circle cx="156" cy="108" r="7" class="lewis-dot"></circle>
+            <circle cx="188" cy="108" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      CO2: {
+        text: "פחמן הוא האטום המרכזי. כדי שכל האטומים יקבלו סביבת יציבות, מתקבלים שני קשרים כפולים: O=C=O. סביב C יש 2 אזורי קשר ולכן המבנה קווי.",
+        notes: ["C מרכזי", "2 קשרים כפולים", "מולקולה ליניארית", "2 אזורי אלקטרונים על C"],
+        svg: `
+          <svg viewBox="0 0 420 220" class="lewis-svg" aria-label="Lewis CO2">
+            <text x="56" y="116" class="lewis-atom-label">O</text>
+            <text x="190" y="116" class="lewis-atom-label">C</text>
+            <text x="324" y="116" class="lewis-atom-label">O</text>
+            <line x1="96" y1="100" x2="154" y2="100" class="lewis-bond"></line>
+            <line x1="96" y1="116" x2="154" y2="116" class="lewis-bond"></line>
+            <line x1="228" y1="100" x2="286" y2="100" class="lewis-bond"></line>
+            <line x1="228" y1="116" x2="286" y2="116" class="lewis-bond"></line>
+            <circle cx="28" cy="84" r="7" class="lewis-dot"></circle>
+            <circle cx="28" cy="146" r="7" class="lewis-dot"></circle>
+            <circle cx="72" cy="70" r="7" class="lewis-dot"></circle>
+            <circle cx="72" cy="160" r="7" class="lewis-dot"></circle>
+            <circle cx="348" cy="70" r="7" class="lewis-dot"></circle>
+            <circle cx="348" cy="160" r="7" class="lewis-dot"></circle>
+            <circle cx="392" cy="84" r="7" class="lewis-dot"></circle>
+            <circle cx="392" cy="146" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      NH3: {
+        text: "בחנקן יש שלושה קשרים וזוג לא־קושר אחד. סה״כ 4 אזורי אלקטרונים, ולכן סביבת האלקטרונים טטראדרלית אבל צורת המולקולה היא פירמידה משולשת.",
+        notes: ["N מרכזי", "3 קשרים", "זוג לא־קושר אחד", "פירמידה משולשת"],
+        svg: `
+          <svg viewBox="0 0 360 280" class="lewis-svg" aria-label="Lewis NH3">
+            <text x="170" y="150" class="lewis-atom-label">N</text>
+            <text x="170" y="56" class="lewis-atom-label">H</text>
+            <text x="72" y="220" class="lewis-atom-label">H</text>
+            <text x="270" y="220" class="lewis-atom-label">H</text>
+            <line x1="180" y1="124" x2="180" y2="84" class="lewis-bond"></line>
+            <line x1="154" y1="160" x2="108" y2="198" class="lewis-bond"></line>
+            <line x1="206" y1="160" x2="252" y2="198" class="lewis-bond"></line>
+            <circle cx="164" cy="110" r="7" class="lewis-dot"></circle>
+            <circle cx="196" cy="110" r="7" class="lewis-dot"></circle>
+          </svg>
+        `
+      },
+      CH4: {
+        text: "לפחמן יש ארבעה קשרים ובלי זוגות לא־קושרים. לכן סה״כ 4 אזורי קשר — מבנה טטראדרלי קלאסי.",
+        notes: ["C מרכזי", "4 קשרים", "ללא זוגות לא־קושרים", "טטראדר"],
+        svg: `
+          <svg viewBox="0 0 380 300" class="lewis-svg" aria-label="Lewis CH4">
+            <text x="182" y="152" class="lewis-atom-label">C</text>
+            <text x="182" y="54" class="lewis-atom-label">H</text>
+            <text x="76" y="154" class="lewis-atom-label">H</text>
+            <text x="286" y="154" class="lewis-atom-label">H</text>
+            <text x="182" y="258" class="lewis-atom-label">H</text>
+            <line x1="190" y1="126" x2="190" y2="82" class="lewis-bond"></line>
+            <line x1="166" y1="146" x2="118" y2="146" class="lewis-bond"></line>
+            <line x1="214" y1="146" x2="262" y2="146" class="lewis-bond"></line>
+            <line x1="190" y1="170" x2="190" y2="224" class="lewis-bond"></line>
+          </svg>
+        `
+      }
+    };
+
+    const lewisButtons = document.querySelectorAll("#lewisButtons .selector-btn");
+    const lewisTextOutput = document.getElementById("lewisTextOutput");
+    const lewisSvgMount = document.getElementById("lewisSvgMount");
+
+    function renderLewis(key) {
+      const item = lewisData[key];
+      lewisTextOutput.innerHTML = `
+        ${item.text}
+        <div class="lewis-note-row" style="margin-top: 12px;">${item.notes.map(note => `<span class="lewis-note">${note}</span>`).join("")}</div>
+      `;
+      lewisSvgMount.innerHTML = item.svg;
+      lewisButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.lewis === key));
+    }
+
+    lewisButtons.forEach(btn => btn.addEventListener("click", () => renderLewis(btn.dataset.lewis)));
+    renderLewis("H2");
+
+    // geometry
+    const geometryData = {
+      CO2: {
+        name: "CO₂",
+        shape: "קווי",
+        regions: 2,
+        lonePairs: 0,
+        text: "לפחמן יש שני אזורי קשר וללא זוגות לא־קושרים, ולכן הכיוונים מסתדרים ב־180° בקו ישר.",
+        chips: ["2 אזורים", "0 זוגות לא־קושרים", "ליניארי"],
+        svg: `
+          <svg viewBox="0 0 360 180" class="geometry-svg" aria-label="CO2 geometry">
+            <line x1="96" y1="90" x2="180" y2="90" class="geometry-bond"></line>
+            <line x1="180" y1="90" x2="264" y2="90" class="geometry-bond"></line>
+            <circle cx="72" cy="90" r="26" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="180" cy="90" r="28" class="geometry-atom geometry-atom--center"></circle>
+            <circle cx="288" cy="90" r="26" class="geometry-atom geometry-atom--outer"></circle>
+            <text x="62" y="98" class="geometry-label">O</text>
+            <text x="170" y="98" class="geometry-label">C</text>
+            <text x="278" y="98" class="geometry-label">O</text>
+          </svg>
+        `
+      },
+      H2O: {
+        name: "H₂O",
+        shape: "זוויתי",
+        regions: 4,
+        lonePairs: 2,
+        text: "סביב החמצן יש 4 אזורי אלקטרונים, אבל שניים מהם זוגות לא־קושרים. לכן צורת המולקולה עצמה היא זוויתית.",
+        chips: ["4 אזורים", "2 זוגות לא־קושרים", "bent"],
+        svg: `
+          <svg viewBox="0 0 360 240" class="geometry-svg" aria-label="H2O geometry">
+            <line x1="180" y1="126" x2="116" y2="180" class="geometry-bond"></line>
+            <line x1="180" y1="126" x2="244" y2="180" class="geometry-bond"></line>
+            <circle cx="180" cy="120" r="28" class="geometry-atom geometry-atom--center"></circle>
+            <circle cx="96" cy="196" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="264" cy="196" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="138" cy="66" r="10" class="geometry-atom geometry-atom--lp"></circle>
+            <circle cx="222" cy="66" r="10" class="geometry-atom geometry-atom--lp"></circle>
+            <text x="170" y="128" class="geometry-label">O</text>
+            <text x="86" y="204" class="geometry-label">H</text>
+            <text x="254" y="204" class="geometry-label">H</text>
+          </svg>
+        `
+      },
+      BF3: {
+        name: "BF₃",
+        shape: "משולש מישורי",
+        regions: 3,
+        lonePairs: 0,
+        text: "לבורון יש שלושה אזורי קשר וללא זוגות לא־קושרים, ולכן שלושת הקשרים מסתדרים במישור בזוויות של 120°.",
+        chips: ["3 אזורים", "0 זוגות לא־קושרים", "trigonal planar"],
+        svg: `
+          <svg viewBox="0 0 360 260" class="geometry-svg" aria-label="BF3 geometry">
+            <line x1="180" y1="130" x2="180" y2="64" class="geometry-bond"></line>
+            <line x1="180" y1="130" x2="110" y2="202" class="geometry-bond"></line>
+            <line x1="180" y1="130" x2="250" y2="202" class="geometry-bond"></line>
+            <circle cx="180" cy="130" r="28" class="geometry-atom geometry-atom--center"></circle>
+            <circle cx="180" cy="44" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="92" cy="218" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="268" cy="218" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <text x="170" y="138" class="geometry-label">B</text>
+            <text x="172" y="52" class="geometry-label">F</text>
+            <text x="84" y="226" class="geometry-label">F</text>
+            <text x="260" y="226" class="geometry-label">F</text>
+          </svg>
+        `
+      },
+      NH3: {
+        name: "NH₃",
+        shape: "פירמידה משולשת",
+        regions: 4,
+        lonePairs: 1,
+        text: "ל־N יש ארבעה אזורי אלקטרונים בסך הכול, אבל אחד מהם זוג לא־קושר. לכן צורת האטומים היא פירמידה משולשת.",
+        chips: ["4 אזורים", "1 זוג לא־קושר", "trigonal pyramidal"],
+        svg: `
+          <svg viewBox="0 0 360 260" class="geometry-svg" aria-label="NH3 geometry">
+            <line x1="180" y1="130" x2="180" y2="66" class="geometry-bond"></line>
+            <line x1="180" y1="130" x2="120" y2="196" class="geometry-bond geometry-bond--behind"></line>
+            <line x1="180" y1="130" x2="244" y2="188" class="geometry-bond"></line>
+            <circle cx="180" cy="130" r="28" class="geometry-atom geometry-atom--center"></circle>
+            <circle cx="180" cy="46" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="104" cy="212" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="260" cy="204" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="132" cy="76" r="10" class="geometry-atom geometry-atom--lp"></circle>
+            <text x="170" y="138" class="geometry-label">N</text>
+            <text x="172" y="54" class="geometry-label">H</text>
+            <text x="96" y="220" class="geometry-label">H</text>
+            <text x="252" y="212" class="geometry-label">H</text>
+          </svg>
+        `
+      },
+      CH4: {
+        name: "CH₄",
+        shape: "טטראדר",
+        regions: 4,
+        lonePairs: 0,
+        text: "לפחמן יש ארבעה אזורי קשר וללא זוגות לא־קושרים. לכן מתקבל מבנה טטראדרלי — ארבע זרועות מאוזנות במרחב.",
+        chips: ["4 אזורים", "0 זוגות לא־קושרים", "tetrahedral"],
+        svg: `
+          <svg viewBox="0 0 360 280" class="geometry-svg" aria-label="CH4 geometry">
+            <line x1="180" y1="136" x2="180" y2="70" class="geometry-bond"></line>
+            <line x1="180" y1="136" x2="112" y2="198" class="geometry-bond geometry-bond--behind"></line>
+            <line x1="180" y1="136" x2="248" y2="198" class="geometry-bond"></line>
+            <line x1="180" y1="136" x2="180" y2="238" class="geometry-bond"></line>
+            <circle cx="180" cy="136" r="28" class="geometry-atom geometry-atom--center"></circle>
+            <circle cx="180" cy="50" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="96" cy="214" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="264" cy="214" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <circle cx="180" cy="258" r="22" class="geometry-atom geometry-atom--outer"></circle>
+            <text x="170" y="144" class="geometry-label">C</text>
+            <text x="172" y="58" class="geometry-label">H</text>
+            <text x="88" y="222" class="geometry-label">H</text>
+            <text x="256" y="222" class="geometry-label">H</text>
+            <text x="172" y="266" class="geometry-label">H</text>
+          </svg>
+        `
+      }
+    };
+
+    const geometryButtons = document.querySelectorAll("#geometryButtons .selector-btn");
+    const geometryOutput = document.getElementById("geometryOutput");
+    const geometrySvgMount = document.getElementById("geometrySvgMount");
+
+    function renderGeometry(key) {
+      const item = geometryData[key];
+      geometryOutput.innerHTML = `
+        <h3>${item.name} — ${item.shape}</h3>
+        <p>${item.text}</p>
+        <div class="geometry-chip-row">${item.chips.map(chip => `<span class="geometry-chip">${chip}</span>`).join("")}</div>
+      `;
+      geometrySvgMount.innerHTML = item.svg;
+      geometryButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.geometry === key));
+    }
+
+    geometryButtons.forEach(btn => btn.addEventListener("click", () => renderGeometry(btn.dataset.geometry)));
+    renderGeometry("CO2");
+
+    // polarity
+    const polarityData = {
+      HCl: {
+        title: "HCl",
+        text: "יש קשר קוטבי, ואין מבנה סימטרי שיבטל אותו — לכן גם המולקולה קוטבית.",
+        chips: ["קשר קוטבי", "מולקולה קוטבית", "דיפול לא מתבטל"]
+      },
+      H2O: {
+        title: "H₂O",
+        text: "הקשרים O–H קוטביים, והמבנה הזוויתי גורם לכך שהדיפולים אינם מתבטלים. לכן המולקולה קוטבית.",
+        chips: ["קשרים קוטביים", "מבנה זוויתי", "מולקולה קוטבית"]
+      },
+      CO2: {
+        title: "CO₂",
+        text: "כל קשר C=O הוא קוטבי, אבל המבנה קווי וסימטרי. שני הדיפולים שווים והפוכים, ולכן מתבטלים.",
+        chips: ["קשרים קוטביים", "מבנה קווי סימטרי", "מולקולה לא קוטבית"]
+      },
+      CH4: {
+        title: "CH₄",
+        text: "המבנה טטראדרלי סימטרי, והקשרים כמעט לא קוטביים מלכתחילה. לכן המולקולה לא קוטבית.",
+        chips: ["טטראדר סימטרי", "ללא דיפול כולל", "לא קוטבית"]
+      },
+      NH3: {
+        title: "NH₃",
+        text: "למרות שיש שלושה קשרים דומים, הזוג הלא־קושר שובר את הסימטריה. לכן המולקולה קוטבית.",
+        chips: ["קשרים קוטביים", "זוג לא־קושר", "מולקולה קוטבית"]
+      }
+    };
+
+    const polarityButtons = document.querySelectorAll("#polarityButtons .selector-btn");
+    const polarityOutput = document.getElementById("polarityOutput");
+
+    function renderPolarity(key) {
+      const item = polarityData[key];
+      polarityOutput.innerHTML = `
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+        <div class="polarity-chip-row">${item.chips.map(chip => `<span class="polarity-chip">${chip}</span>`).join("")}</div>
+      `;
+      polarityButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.polarity === key));
+    }
+
+    polarityButtons.forEach(btn => btn.addEventListener("click", () => renderPolarity(btn.dataset.polarity)));
+    renderPolarity("HCl");
+
+    // tetra
+    const tetraData = {
+      CH4: {
+        title: "CH₄",
+        text: "כל הזרועות זהות — סימטריה גבוהה. לכן גם אם נחשוב על קשרים דומים, אין דיפול כולל. המולקולה לא קוטבית.",
+        chips: ["טטראדר סימטרי", "לא קוטבית"]
+      },
+      CH3F: {
+        title: "CH₃F",
+        text: "החלפנו H אחד ב־F, והסימטריה נשברה. כעת הדיפול של C–F לא מתבטל, ולכן המולקולה קוטבית.",
+        chips: ["F אחד", "שבירת סימטריה", "קוטבית"]
+      },
+      CH2F2: {
+        title: "CH₂F₂",
+        text: "יש שני F ושני H. עדיין אין סימטריה מלאה שמבטלת את כל הדיפולים, ולכן המולקולה קוטבית.",
+        chips: ["2F + 2H", "דיפולים לא מתבטלים", "קוטבית"]
+      },
+      CHF3: {
+        title: "CHF₃",
+        text: "שלושה F מושכים חזק יותר מה־H היחיד, ולכן יש דיפול כולל ברור. המולקולה קוטבית.",
+        chips: ["3F + H", "דיפול כולל", "קוטבית"]
+      },
+      CF4: {
+        title: "CF₄",
+        text: "למרות שכל קשר C–F קוטבי, כל ארבע הזרועות זהות ומסודרות סימטרית בטטראדר, ולכן הדיפולים מתבטלים. המולקולה לא קוטבית.",
+        chips: ["4F זהים", "טטראדר סימטרי", "לא קוטבית"]
+      }
+    };
+
+    const tetraButtons = document.querySelectorAll("#tetraButtons .selector-btn");
+    const tetraOutput = document.getElementById("tetraOutput");
+    const tetraSvgMount = document.getElementById("tetraSvgMount");
+
+    function tetraArm(label, x, y, color) {
+      return `
+        <line x1="180" y1="138" x2="${x}" y2="${y}" class="geometry-bond"></line>
+        <circle cx="${x}" cy="${y}" r="22" fill="${color}" class="geometry-atom"></circle>
+        <text x="${x - 10}" y="${y + 8}" class="geometry-label">${label}</text>
+      `;
+    }
+
+    function renderTetra(key) {
+      const item = tetraData[key];
+
+      const labels = {
+        CH4: ["H","H","H","H"],
+        CH3F: ["F","H","H","H"],
+        CH2F2: ["F","F","H","H"],
+        CHF3: ["F","F","F","H"],
+        CF4: ["F","F","F","F"]
+      }[key];
+
+      const colors = labels.map(l => l === "F" ? "#6cc7d8" : "#f25f5c");
+      const arms = [
+        { x: 180, y: 54 },
+        { x: 98, y: 212 },
+        { x: 262, y: 212 },
+        { x: 180, y: 264 }
+      ];
+
+      tetraSvgMount.innerHTML = `
+        <svg viewBox="0 0 360 320" class="tetra-svg" aria-label="${key} tetrahedral view">
+          <circle cx="180" cy="138" r="28" fill="#2f6fd6" class="geometry-atom"></circle>
+          <text x="170" y="146" class="geometry-label">C</text>
+          ${arms.map((arm, i) => tetraArm(labels[i], arm.x, arm.y, colors[i])).join("")}
+        </svg>
+      `;
+
+      tetraOutput.innerHTML = `
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+        <div class="solubility-chip-row">${item.chips.map(chip => `<span class="solubility-chip">${chip}</span>`).join("")}</div>
+      `;
+
+      tetraButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.tetra === key));
+    }
+
+    tetraButtons.forEach(btn => btn.addEventListener("click", () => renderTetra(btn.dataset.tetra)));
+    renderTetra("CH4");
+
+    // forces
+    const forceData = [
+      {
+        key: "vdw",
+        title: "כוחות ואן־דר־ואלס",
+        formula: "He / I₂ / CH₄",
+        text: "קיימים בין כל החלקיקים, גם אם הם לא קוטביים. הם נובעים מהתפלגות רגעית של אלקטרונים ויוצרים דיפולים רגעיים.",
+        strength: 28,
+        compare: "החלשים ביותר מבין הכוחות הבין־מולקולריים הרגילים."
+      },
+      {
+        key: "dipole",
+        title: "דיפול־דיפול",
+        formula: "HCl / CH₃Cl",
+        text: "פועלים בין מולקולות קוטביות. הצד החיובי החלקי של מולקולה אחת נמשך לצד השלילי החלקי של אחרת.",
+        strength: 52,
+        compare: "חזקים יותר מואן־דר־ואלס, אך חלשים מקשר מימן."
+      },
+      {
+        key: "hydrogen",
+        title: "קשרי מימן",
+        formula: "H₂O / HF / NH₃",
+        text: "מתקבלים כשמימן קשור ל־N, O או F ונמשך לזוג לא־קושר במולקולה שכנה. זהו כוח בין־מולקולרי חזק יחסית.",
+        strength: 76,
+        compare: "חזק במיוחד יחסית לשאר הכוחות הבין־מולקולריים, אך עדיין חלש משמעותית מקשר קוולנטי או יוני."
+      }
+    ];
+
+    const forceGrid = document.getElementById("forceGrid");
+    const forceOutput = document.getElementById("forceOutput");
+
+    forceGrid.innerHTML = forceData.map(item => `
+      <button class="force-card force-choice" type="button" data-force="${item.key}">
+        <div class="force-choice__formula">${item.formula}</div>
+        <h3>${item.title}</h3>
+        <p>לחץ להרחבה</p>
+      </button>
+    `).join("");
+
+    function renderForce(key) {
+      const item = forceData.find(f => f.key === key);
+      forceOutput.innerHTML = `
+        <strong>${item.title}</strong><br>
+        ${item.text}<br>
+        <div class="force-strength">
+          <span>עוצמה יחסית</span>
+          <div class="force-strength__bar"><div class="force-strength__fill" style="width:${item.strength}%"></div></div>
+        </div>
+        <p style="margin-top:12px;"><strong>השוואה:</strong> ${item.compare}</p>
+      `;
+      document.querySelectorAll(".force-choice").forEach(card => {
+        card.classList.toggle("is-active", card.dataset.force === key);
+      });
+    }
+
+    forceGrid.addEventListener("click", (event) => {
+      const card = event.target.closest(".force-choice");
+      if (!card) return;
+      renderForce(card.dataset.force);
+    });
+
+    renderForce("vdw");
+
+    // phase / dissolving
+    const phaseButtons = document.querySelectorAll("#phaseButtons .selector-btn");
+    const phaseOutput = document.getElementById("phaseOutput");
+
+    const phaseData = {
+      melting: {
+        title: "התכה",
+        text: "התכה היא מעבר ממוצק לנוזל. בחימום כזה החלקיקים לא מתפרקים לחלקיקים חדשים — הם פשוט משתחררים חלקית מהסידור הקבוע שלהם."
+      },
+      boiling: {
+        title: "רתיחה",
+        text: "רתיחה היא מעבר מנוזל לגז. כדי שזה יקרה צריך להתגבר על הכוחות שמחזיקים מולקולה ליד מולקולה או יון ליד יון."
+      },
+      dissolving: {
+        title: "המסה",
+        text: "המסה איננה מעבר מצב צבירה. בהמסה, חומר אחד מתפזר בתוך חומר אחר. הממס הוא החומר שבו ממיסים, המומס הוא החומר שנכנס, והכול יחד נקרא תמיסה."
+      }
+    };
+
+    function renderPhase(key) {
+      const item = phaseData[key];
+      phaseOutput.innerHTML = `
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+      `;
+      phaseButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.phase === key));
+    }
+
+    phaseButtons.forEach(btn => btn.addEventListener("click", () => renderPhase(btn.dataset.phase)));
+    renderPhase("melting");
+
+    // solubility
+    const solubilityButtons = document.querySelectorAll("#solubilityButtons .selector-btn");
+    const solubilityOutput = document.getElementById("solubilityOutput");
+
+    const solubilityData = {
+      NaCl: {
+        title: "NaCl",
+        text: "תרכובת יונית. מים קוטביים מייצבים את היונים Na⁺ ו־Cl⁻ ולכן המלח נמס היטב במים. בשמן, שהוא לא קוטבי, זה לא קורה.",
+        chips: ["נמס במים", "לא נמס היטב בשמן", "יונים מיוצבים ע״י מים"]
+      },
+      Sugar: {
+        title: "סוכר",
+        text: "מולקולה מולקולרית, אבל עם הרבה קבוצות OH. לכן היא יוצרת קשרי מימן עם מים ונמסה היטב בהם.",
+        chips: ["קבוצות OH", "קשרי מימן עם מים", "נמס במים"]
+      },
+      Oil: {
+        title: "שמן",
+        text: "שמן הוא ברובו לא קוטבי, ולכן אינו נמס היטב במים. הוא דווקא מסתדר טוב עם חומרים לא קוטביים אחרים.",
+        chips: ["לא קוטבי", "לא נמס במים", "נמס בחומרים דומים"]
+      },
+      Ethanol: {
+        title: "אתנול",
+        text: "לאתנול יש גם חלק פחמימני וגם קבוצת OH. ה־OH עוזר לו להיות מסיס היטב במים.",
+        chips: ["OH", "מסיס במים", "חלק קוטבי + חלק אורגני"]
+      },
+      Hexane: {
+        title: "הקסאן",
+        text: "מולקולה לא קוטבית. לכן לא תימס היטב במים, אבל תימס היטב בשמן ובממסים אורגניים לא קוטביים.",
+        chips: ["לא קוטבי", "לא נמס במים", "נמס בשמן"]
+      }
+    };
+
+    function renderSolubility(key) {
+      const item = solubilityData[key];
+      solubilityOutput.innerHTML = `
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+        <div class="solubility-chip-row">${item.chips.map(chip => `<span class="solubility-chip">${chip}</span>`).join("")}</div>
+      `;
+      solubilityButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.solubility === key));
+    }
+
+    solubilityButtons.forEach(btn => btn.addEventListener("click", () => renderSolubility(btn.dataset.solubility)));
+    renderSolubility("NaCl");
+
+    // bond order
+    const bondOrderData = [
+      {
+        key: "F2",
+        formula: "F₂",
+        order: 1,
+        title: "קשר יחיד",
+        text: "זוג אלקטרונים משותף אחד באתר הקשר. זהו סדר קשר 1."
+      },
+      {
+        key: "O2",
+        formula: "O₂",
+        order: 2,
+        title: "קשר כפול",
+        text: "שני זוגות אלקטרונים משותפים. זהו סדר קשר 2."
+      },
+      {
+        key: "N2",
+        formula: "N₂",
+        order: 3,
+        title: "קשר משולש",
+        text: "שלושה זוגות אלקטרונים משותפים. זהו סדר קשר 3."
+      }
+    ];
+
+    const bondOrderGrid = document.getElementById("bondOrderGrid");
+    const bondOrderOutput = document.getElementById("bondOrderOutput");
+
+    bondOrderGrid.innerHTML = bondOrderData.map(item => `
+      <button class="order-card" type="button" data-order-key="${item.key}">
+        <div class="order-card__formula">${item.formula}</div>
+        <h3>${item.title}</h3>
+        <div class="order-visual">
+          <span class="ltr-line">${item.key.charAt(0)}</span>
+          <div class="bond-bars">${Array.from({ length: item.order }, () => `<span></span>`).join("")}</div>
+          <span class="ltr-line">${item.key.charAt(0)}</span>
+        </div>
+      </button>
+    `).join("");
+
+    function renderBondOrder(key) {
+      const item = bondOrderData.find(entry => entry.key === key);
+      bondOrderOutput.innerHTML = `
+        <strong>${item.title}</strong><br>
+        ${item.text}<br>
+        <span class="pair-chip">סדר קשר = ${item.order}</span>
+        ${item.order === 3 ? `<span class="pair-chip">ככל שסדר הקשר גבוה יותר, הקשר לרוב קצר וחזק יותר</span>` : ""}
+      `;
+      document.querySelectorAll(".order-card").forEach(card => {
+        card.classList.toggle("is-active", card.dataset.orderKey === key);
+      });
+    }
+
+    bondOrderGrid.addEventListener("click", (event) => {
+      const card = event.target.closest(".order-card");
+      if (!card) return;
+      renderBondOrder(card.dataset.orderKey);
+    });
+
+    renderBondOrder("F2");
+
+    // properties & conductivity
+    const materialData = {
+      Al: {
+        name: "אלומיניום",
+        type: "מתכתי",
+        particle: "יונים חיוביים + ים אלקטרונים",
+        melting: "בינונית עד גבוהה",
+        states: {
+          solid: { conducts: true, text: "במוצק מתכתי האלקטרונים חופשיים לנוע, ולכן יש מוליכות טובה." },
+          liquid: { conducts: true, text: "גם כנוזל, עדיין יש נושאי מטען ניידים ולכן החומר מוליך." },
+          solution: { conducts: false, text: "לא חושבים עליו כאן כחומר שמתפרק לתמיסה מימית פשוטה." }
+        }
+      },
+      NaCl: {
+        name: "נתרן כלורי",
+        type: "יוני",
+        particle: "יונים חיוביים ושליליים",
+        melting: "גבוהה",
+        states: {
+          solid: { conducts: false, text: "במוצק היונים כלואים במקומם בתוך הסריג, ולכן אין מוליכות." },
+          liquid: { conducts: true, text: "בנוזל היונים חופשיים לנוע, ולכן יש מוליכות." },
+          solution: { conducts: true, text: "בתמיסה מימית היונים מופרדים ומסוגלים לשאת מטען, ולכן יש מוליכות." }
+        }
+      },
+      SiO2: {
+        name: "צורן דו־חמצני",
+        type: "אטומי / רשת קוולנטית",
+        particle: "אטומים ברשת קוולנטית ענקית",
+        melting: "גבוהה מאוד",
+        states: {
+          solid: { conducts: false, text: "האלקטרונים אינם חופשיים לנוע, ולכן הרשת אינה מוליכה." },
+          liquid: { conducts: false, text: "זה לא מצב שנוח ללימוד בסיסי כאן; באופן כללי זו אינה מוליכות טיפוסית." },
+          solution: { conducts: false, text: "החומר כמעט לא מתמוסס במים ולכן אין יונים ניידים בתמיסה." }
+        }
+      },
+      H2O: {
+        name: "מים",
+        type: "מולקולרי",
+        particle: "מולקולות עם קשרי מימן ביניהן",
+        melting: "נמוכה יחסית",
+        states: {
+          solid: { conducts: false, text: "בקרח אין נושאי מטען ניידים, ולכן אין מוליכות טובה." },
+          liquid: { conducts: false, text: "מים טהורים מוליכים חלש מאוד; ברמת מבוא נחשיב אותם כלא מוליכים." },
+          solution: { conducts: false, text: "מים לבדם אינם נותנים הרבה יונים; המוליכות תגיע מחומרים מומסים שיוצרים יונים." }
+        }
+      },
+      C12H22O11: {
+        name: "סוכר",
+        type: "מולקולרי",
+        particle: "מולקולות",
+        melting: "נמוכה–בינונית",
+        states: {
+          solid: { conducts: false, text: "החומר המולקולרי אינו מכיל נושאי מטען חופשיים." },
+          liquid: { conducts: false, text: "גם כנוזל או כמסה מותכת אין יונים חופשיים." },
+          solution: { conducts: false, text: "הסוכר מתמוסס כמולקולות שלמות, לא כיונים, ולכן התמיסה אינה מוליכה." }
+        }
+      },
+      HClaq: {
+        name: "חומצת מלח במים",
+        type: "מולקולרי שהופך ליוני בתמיסה",
+        particle: "יונים בתמיסה",
+        melting: "לא רלוונטי כאן",
+        states: {
+          solid: { conducts: false, text: "לא נלמד כאן כמוצק." },
+          liquid: { conducts: false, text: "הצגה זו פחות רלוונטית בשיעור." },
+          solution: { conducts: true, text: "במים HCl יוצר יונים, ולכן התמיסה מוליכה היטב." }
+        }
+      },
+      Oil: {
+        name: "שמן",
+        type: "מולקולרי לא קוטבי",
+        particle: "מולקולות לא קוטביות",
+        melting: "נמוכה",
+        states: {
+          solid: { conducts: false, text: "אין נושאי מטען חופשיים." },
+          liquid: { conducts: false, text: "גם בנוזל אין יונים חופשיים, ולכן אין מוליכות." },
+          solution: { conducts: false, text: "בשמן אין יונים חופשיים, והוא גם לא יוצר תמיסה מימית מוליכה." }
+        }
+      }
+    };
+
+    const materialSelect = document.getElementById("materialSelect");
+    const stateButtons = document.querySelectorAll("#stateButtons .state-chip");
+    const propertyOutput = document.getElementById("propertyOutput");
+    let activeState = "solid";
+
+    function updateProperties() {
+      const material = materialData[materialSelect.value];
+      const state = material.states[activeState];
+      propertyOutput.innerHTML = `
+        <div class="bulb-row">
+          <div class="bulb ${state.conducts ? "is-on" : ""}"></div>
+          <div class="conduct-path">
+            <div class="conduct-path__flow ${state.conducts ? "is-on" : ""}"></div>
+          </div>
+          <strong>${state.conducts ? "מוליך" : "לא מוליך"}</strong>
+        </div>
+
+        <h3>${material.name}</h3>
+        <div class="property-facts">
+          <div class="property-fact"><strong>סוג חומר:</strong> ${material.type}</div>
+          <div class="property-fact"><strong>סוג חלקיק:</strong> ${material.particle}</div>
+          <div class="property-fact"><strong>נקודת התכה/רתיחה:</strong> ${material.melting}</div>
+          <div class="property-fact"><strong>הסבר למצב שנבחר:</strong> ${state.text}</div>
+          <div class="property-fact"><strong>עיקרון:</strong> בתמיסה מימית צריך יונים חופשיים כדי שתהיה מוליכות.</div>
+        </div>
+      `;
+
+      stateButtons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.state === activeState));
+    }
+
+    materialSelect.addEventListener("change", updateProperties);
+    stateButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeState = btn.dataset.state;
+        updateProperties();
+      });
+    });
+    updateProperties();
+
+    // quiz
+    const quizData = [
+      {
+        question: "מה מאפיין קשר קוולנטי?",
+        answers: [
+          "העברה מלאה של אלקטרונים",
+          "שיתוף אלקטרונים בין אטומים",
+          "ים אלקטרונים במתכת"
+        ],
+        correctIndex: 1,
+        explanation: "בקשר קוולנטי האלקטרונים משותפים בין האטומים."
+      },
+      {
+        question: "CO₂ היא...",
+        answers: [
+          "מולקולה קוטבית כי יש קשרים קוטביים",
+          "מולקולה לא קוטבית כי המבנה סימטרי",
+          "יונית"
+        ],
+        correctIndex: 1,
+        explanation: "הקשרים קוטביים, אבל המבנה הקווי הסימטרי מבטל את הדיפולים."
+      },
+      {
+        question: "מהו מבנה טטראדרלי?",
+        answers: [
+          "מבנה עם שני אזורי קשר בלבד",
+          "מבנה עם ארבעה אזורי קשר/אלקטרונים סביב האטום המרכזי",
+          "מבנה של מולקולות יוניות בלבד"
+        ],
+        correctIndex: 1,
+        explanation: "טטראדר מתאר סידור של ארבעה כיוונים במרחב סביב אטום מרכזי."
+      },
+      {
+        question: "מה חזק יותר בדרך כלל?",
+        answers: [
+          "ואן־דר־ואלס לעומת קשר קוולנטי",
+          "קשר מימן לעומת ואן־דר־ואלס",
+          "דיפול־דיפול לעומת קשר יוני"
+        ],
+        correctIndex: 1,
+        explanation: "קשר מימן חזק יחסית בין הכוחות הבין־מולקולריים, אך עדיין חלש מקשר יוני או קוולנטי."
+      },
+      {
+        question: "למה תמיסת NaCl מוליכה?",
+        answers: [
+          "כי המולקולות של NaCl זזות במים",
+          "כי יש יונים חופשיים בתמיסה",
+          "כי המים עצמם מוליכים מאוד"
+        ],
+        correctIndex: 1,
+        explanation: "בתמיסה NaCl מתפרק ליונים, והם נושאי המטען הנעים."
+      },
+      {
+        question: "למה סוכר בתמיסה בדרך כלל לא מוליך?",
+        answers: [
+          "כי הוא לא נמס כלל",
+          "כי הוא מתמוסס כמולקולות ולא כיונים",
+          "כי הוא יוצר סריג יוני"
+        ],
+        correctIndex: 1,
+        explanation: "סוכר יכול להימס היטב, אבל אם הוא לא יוצר יונים חופשיים התמיסה לא תוליך."
+      },
+      {
+        question: "מהו ההבדל בין התכה להמסה?",
+        answers: [
+          "אין הבדל",
+          "התכה היא מעבר מוצק→נוזל, והמסה היא פיזור מומס בממס",
+          "המסה היא מעבר נוזל→גז"
+        ],
+        correctIndex: 1,
+        explanation: "התכה היא שינוי מצב צבירה. המסה היא יצירת תמיסה."
+      }
+    ];
+
+    renderQuiz("quizMount", quizData);
+  </script>
+</body>
+</html>
